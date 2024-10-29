@@ -1,5 +1,7 @@
 ---
-title: "Your Title"
+title: "Problem Set 4"
+author: "Cristian Bancayan & Sol Rivas Lopes"
+date: "2 November 2024"
 format: 
   pdf:
     keep-tex: true
@@ -19,20 +21,220 @@ include-before-body:
 
 **PS4:** Due Sat Nov 2 at 5:00PM Central. Worth 100 points. 
 
+
+> “This submission is our work alone and complies with the 30538 integrity policy.” Add your initials to indicate your agreement: **CB** **SCRL**
+
+> “I have uploaded the names of anyone else other than my partner and I worked with on the problem set here” (1 point)
+
+> Late coins used this pset: **__** Late coins left after submission: **__**
+
 ## Style Points (10 pts)
 
 ## Submission Steps (10 pts)
 
 ## Download and explore the Provider of Services (POS) file (10 pts)
 
-1. 
-2. 
-    a.
-    b.
-3. 
-4. 
-    a.
-    b.
+# Question 1
+
+```{python}
+import warnings
+import pandas as pd
+import altair as alt
+import time
+import datetime as dt
+import numpy as np
+import chardet
+import os
+alt.renderers.enable("png")
+
+warnings.filterwarnings('ignore')
+
+# Working directory
+base_path = r"C:\Users\solch\OneDrive\Documentos\2024 - autumn quarter\python II"
+
+```
+
+After reading the tasks for this problem set, I pulled the PRVDR_CTGRY_CD, PRVDR_CTGRY_SBTYP_CD, PRVDR_NUM, PGM_TRMNTN_CD, FAC_NAME, ZIP_CD variables
+
+# Question 2
+
+## Part (a)
+
+```{python}
+
+# reading in file for 2016
+path = os.path.join(
+    base_path, "problem-set-4-sol-cristian\pos2016.csv")
+
+df_2016 = pd.read_csv(path)
+
+
+# Subsetting to include only short-term hospitals
+df_2016 = df_2016[(df_2016["PRVDR_CTGRY_CD"] == 1) & (df_2016["PRVDR_CTGRY_SBTYP_CD"] == 1)]
+
+
+# Counting rows to get number of hospitals reported in data
+row_count_2016 = df_2016.shape[0]
+
+print(f"The number of hospitals reported in the data is {row_count_2016}")
+
+```
+
+## Part (b)
+
+> According to the Kaiser Family Foundation, "there are nearly 5,000 short-term, acute care hospitals in the United States." This number is considerably lower than the one we find in our data. There are two reasons that can explain this discrepancy. First, we know this datset will include hospitals that are no longer active, which would increase the number of facilities it is reporting. Second, this number references "acute care hospitals." These facilities ["primarily provides short-term medical treatment for patients with severe or urgent health issues. These institutions — common in small towns and rural areas — deliver comprehensive and specialized medical care for conditions that require immediate attention."] {https://www.kff.org/report-section/a-look-at-rural-hospital-closures-and-implications-for-access-to-care-three-case-studies-issue-brief/}. Although our data is subsetted for short-term facilities, it can be considering other categories of hospitals, such as psychiatric, research, or specialty hospitals. 
+
+
+
+## Question 3
+
+```{python}
+
+#########################
+###   2017 DATASET    ###
+#########################
+
+# reading in file for 2017
+path = os.path.join(
+    base_path, "problem-set-4-sol-cristian\pos2017.csv")
+
+df_2017 = pd.read_csv(path)
+
+
+# Subsetting to include only short-term hospitals
+df_2017 = df_2017[(df_2017["PRVDR_CTGRY_CD"] == 1) &
+                  (df_2017["PRVDR_CTGRY_SBTYP_CD"] == 1)]
+
+
+# Counting rows to get number of hospitals reported in data
+row_count_2017 = df_2017.shape[0]
+
+print(f"The number of hospitals reported in the 2017 data is {row_count_2017}")
+```
+
+```{python}
+
+#########################
+###   2018 DATASET    ###
+#########################
+
+# Setting path
+
+path = os.path.join(
+    base_path, "problem-set-4-sol-cristian\pos2018.csv")
+
+
+# When trying to read in file, it seems that the encoding is different than what python assumes by default. I got an error, which I fed to ChatGPT
+# It corrected my code to include the encoding:
+
+# Reading in file
+df_2018 = pd.read_csv(path, encoding="ISO-8859-1")
+
+
+# Subsetting to include only short-term hospitals
+df_2018 = df_2018[(df_2018["PRVDR_CTGRY_CD"] == 1) &
+                  (df_2018["PRVDR_CTGRY_SBTYP_CD"] == 1)]
+
+
+# Counting rows to get number of hospitals reported in data
+row_count_2018 = df_2018.shape[0]
+
+print(f"The number of hospitals reported in the 2018 data is {row_count_2018}")
+
+```
+
+
+```{python}
+
+#########################
+###   2019 DATASET    ###
+#########################
+
+# reading in file for 2019
+path = os.path.join(
+    base_path, "problem-set-4-sol-cristian\pos2019.csv")
+
+df_2019 = pd.read_csv(path, encoding="ISO-8859-1")
+
+
+# Subsetting to include only short-term hospitals
+df_2019 = df_2019[(df_2019["PRVDR_CTGRY_CD"] == 1) &
+                  (df_2019["PRVDR_CTGRY_SBTYP_CD"] == 1)]
+
+
+# Counting rows to get number of hospitals reported in data
+row_count_2019 = df_2019.shape[0]
+
+print(f"The number of hospitals reported in the 2019 data is {row_count_2019}")
+```
+
+```{python}
+
+#########################
+###     APPENDING     ###
+#########################
+
+# Adding a year column in each dataset to indentify it later on
+df_2016["YEAR"] = 2016
+df_2017["YEAR"] = 2017
+df_2018["YEAR"] = 2018
+df_2019["YEAR"] = 2019
+
+
+# Appending datsets together
+df_final = pd.concat([df_2016, df_2017, df_2018, df_2019],
+                     ignore_index=True)
+
+
+#########################
+###     GRAPHING      ###
+#########################
+
+
+# Creating a small df with the number of observations each year
+
+df_obs = {
+    "Year": [2016, 2017, 2018, 2019],
+    "Count": [row_count_2016, row_count_2017, row_count_2018, row_count_2019]
+}
+
+df_obs = pd.DataFrame(df_obs)
+
+
+# Plotting
+
+alt.Chart(df_obs, title="Number of Observations by Year").mark_bar().encode(
+    alt.X("Year:N", title="Year"),
+    alt.Y("Count:Q", title="Number of Observations")
+).configure_axis(
+    labelFontSize=8,
+    titleFontSize=12
+)
+```
+
+
+
+## Question 4
+
+### Part (a)
+
+```{python}
+
+df_unique = df_final.groupby("YEAR")["PRVDR_NUM"].nunique().reset_index()
+
+alt.Chart(df_unique, title="Number of Unique Observations by Year").mark_bar().encode(
+    alt.X("YEAR:N", title="Year"),
+    alt.Y("PRVDR_NUM:Q", title="Number of Unique Observations")
+).configure_axis(
+    labelFontSize=8,
+    titleFontSize=12
+)
+
+```
+
+### Part (b) FLAG
+
+> looks the same? something might be wrong
 
 ## Identify hospital closures in POS file (15 pts) (*)
 
