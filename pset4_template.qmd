@@ -50,7 +50,7 @@ alt.renderers.enable("png")
 warnings.filterwarnings('ignore')
 
 # Working directory
-base_path = r"C:\Users\solch\OneDrive\Documentos\2024 - autumn quarter\python II"
+base_path = r"C:\Users\Cristian\Documents\GitHub\ppha30538_fall2024"
 
 ```
 
@@ -66,7 +66,7 @@ After reading the tasks for this problem set, I pulled the PRVDR_CTGRY_CD, PRVDR
 path = os.path.join(
     base_path, "problem-set-4-sol-cristian\pos2016.csv")
 
-df_2016 = pd.read_csv(path)
+df_2016 = pd.read_csv(path, sep=';')
 
 
 # Subsetting to include only short-term hospitals
@@ -98,7 +98,7 @@ print(f"The number of hospitals reported in the data is {row_count_2016}")
 path = os.path.join(
     base_path, "problem-set-4-sol-cristian\pos2017.csv")
 
-df_2017 = pd.read_csv(path)
+df_2017 = pd.read_csv(path, sep=';')
 
 
 # Subsetting to include only short-term hospitals
@@ -128,7 +128,7 @@ path = os.path.join(
 # It corrected my code to include the encoding:
 
 # Reading in file
-df_2018 = pd.read_csv(path, encoding="ISO-8859-1")
+df_2018 = pd.read_csv(path, sep=';')
 
 
 # Subsetting to include only short-term hospitals
@@ -154,7 +154,7 @@ print(f"The number of hospitals reported in the 2018 data is {row_count_2018}")
 path = os.path.join(
     base_path, "problem-set-4-sol-cristian\pos2019.csv")
 
-df_2019 = pd.read_csv(path, encoding="ISO-8859-1")
+df_2019 = pd.read_csv(path, sep=';')
 
 
 # Subsetting to include only short-term hospitals
@@ -239,11 +239,102 @@ alt.Chart(df_unique, title="Number of Unique Observations by Year").mark_bar().e
 ## Identify hospital closures in POS file (15 pts) (*)
 
 1. 
+```{python}
+df_active2016 = df_2016[df_2016["PGM_TRMNTN_CD"] == 0]
+
+df_closed_by2019 = df_final[df_final["YEAR"]!=2016]
+df_closed_by2019 = df_closed_by2019[df_closed_by2019["PGM_TRMNTN_CD"]!=0]
+
+df_closed_by2019 = df_active2016.merge(df_closed_by2019[["PRVDR_NUM","PGM_TRMNTN_CD", "YEAR"]], on="PRVDR_NUM", how="left", indicator=True)
+
+df_closed_by2019["_merge"].unique()
+# Didn't find any active in 2016 that dissapear later.
+
+df_closed_by2019 = df_closed_by2019[df_closed_by2019["_merge"] == "both"]
+
+df_closed_by2019.sort_values(by=['PRVDR_NUM', 'YEAR_y'], ascending=[False, True], inplace=True)
+
+# Keep the year in which the hospital has the status of not active for the first time.
+df_closed_by2019 = df_closed_by2019.groupby("PRVDR_NUM").aggregate(
+    FAC_NAME = ("FAC_NAME", "first"),
+    ZIP_CD   = ("ZIP_CD", "first"),
+    YEAR     = ("YEAR_y", "first")
+).reset_index()
+
+row_closed_by2019 = df_closed_by2019.shape[0]
+print(f"Number of hospitals that were active in 2016 and were suspected to have closed by 2019: {row_closed_by2019}")
+```
+
 2. 
+
+```{python}
+# Sorting by name
+df_closed_by2019.sort_values(by=['FAC_NAME'], inplace=True)
+df_closed_by2019.head(10)
+```
+
 3. 
+```{python}
+df_active = df_final
+
+df_active['ACTIVES'] = df_active['PGM_TRMNTN_CD'].apply(
+    lambda x: 1 if x == 0 else 0)
+
+df_active['NO_ACTIVE'] = df_active['PGM_TRMNTN_CD'].apply(
+    lambda x: 1 if x != 0 else 0)
+
+# Number of active, non active and total hospitals by zip and year
+df_nactive_zip = df_active.groupby(["ZIP_CD","YEAR"]).aggregate(
+    ACTIVE    = ("ACTIVES"  , "sum"),
+    NO_ACTIVE = ("NO_ACTIVE", "sum"),
+    TOTAL     = ("FAC_NAME" , "count")
+).reset_index()
+
+df_zip_fail = df_closed_by2019.merge(df_nactive_zip, on =["ZIP_CD"], how = "left", indicator=True)
+
+df_zip_fail = df_zip_fail[(df_zip_fail['YEAR_x'] == df_zip_fail['YEAR_y']) | (df_zip_fail['YEAR_x'] - 1 == df_zip_fail['YEAR_y'])]
+
+df_zip_fail['CHANGE_YEAR'] = df_active['PGM_TRMNTN_CD'].apply(
+    lambda x: 1 if x != 0 else 0)
+
+df_zip_fail['STATUS'] = 'Other'
+df_zip_fail.loc[df_zip_fail['YEAR_x'] - 1 == df_zip_fail['YEAR_y'], 'STATUS'] = 'PAST'
+df_zip_fail.loc[df_zip_fail['YEAR_x'] == df_zip_fail['YEAR_y'], 'STATUS'] = 'CHANGE'
+
+df_zip_fail = df_zip_fail[["ZIP_CD","STATUS","ACTIVE"]]
+
+df_zip_fail = df_zip_fail.pivot(index="ZIP_CD", columns="STATUS", values="ACTIVE").reset_index()
+
+df_zip_fail["DECREASE"] = df_zip_fail["CHANGE"] - df_zip_fail["PAST"]
+
+# Zip codes where the number of hospital do not decrease in the year of clousure
+df_zip_fail = df_zip_fail[df_zip_fail["DECREASE"]>=0]
+```
     a.
+
+```{python}
+df_closed_by2019 = df_closed_by2019.merge(df_zip_fail[["ZIP_CD","DECREASE"]], on = "ZIP_CD", how="left")
+
+df_closed_by2019["DECREASE"].unique()
+
+df_closed_by2019["POT_MERGE"] = df_closed_by2019["DECREASE"].apply(
+    lambda x: 1 if x == 0 else 0)
+
+pot_merge = df_closed_by2019[df_closed_by2019["POT_MERGE"]==1]["POT_MERGE"].value_counts().iloc[0]
+
+print(f"Number of hospitals that fit in the definition of potentially being a merger/acquisition: {pot_merge}")
+
+df_closed_by2019 = df_closed_by2019[df_closed_by2019["POT_MERGE"] != 1]
+nhospital_corrected = df_closed_by2019.shape[0]
+
+print(f"Number of hospitals left after correction for potential merge: {nhospital_corrected}")
+```
     b.
-    c.
+```{python}
+# Sorting by name
+df_closed_by2019.sort_values(by=['FAC_NAME'], inplace=True)
+df_closed_by2019.head(10)
+```
 
 ## Download Census zip code shapefile (10 pt) 
 
