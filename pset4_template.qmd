@@ -19,14 +19,13 @@ include-before-body:
     }
 ---
 
-**PS4:** Due Sat Nov 2 at 5:00PM Central. Worth 100 points. 
-
+**PS4:** Due Sat Nov 2 at 5:00PM Central. Worth 100 points.
 
 > “This submission is our work alone and complies with the 30538 integrity policy.” Add your initials to indicate your agreement: **CB** **SCRL**
 
 > “I have uploaded the names of anyone else other than my partner and I worked with on the problem set here” (1 point)
 
-> Late coins used this pset: **__** Late coins left after submission: **__**
+> Late coins used this pset: \*\*\_\_\*\* Late coins left after submission: \*\*\_\_\*\*
 
 ## Style Points (10 pts)
 
@@ -34,31 +33,36 @@ include-before-body:
 
 ## Download and explore the Provider of Services (POS) file (10 pts)
 
-# Question 1
+### Question 1
 
 ```{python}
 import warnings
 import pandas as pd
 import altair as alt
-import time
 import datetime as dt
 import numpy as np
 import chardet
 import os
+import geopandas as gpd
+import matplotlib.pyplot as plt
+
 alt.renderers.enable("png")
 
 warnings.filterwarnings('ignore')
 
 # Working directory
-base_path = r"C:\Users\Cristian\Documents\GitHub\ppha30538_fall2024"
+# Cris
+# base_path = r"C:\Users\Cristian\Documents\GitHub\ppha30538_fall2024"
+# Sol
+base_path = r"C:\Users\solch\OneDrive\Documentos\2024 - autumn quarter\python II"
 
 ```
 
 After reading the tasks for this problem set, I pulled the PRVDR_CTGRY_CD, PRVDR_CTGRY_SBTYP_CD, PRVDR_NUM, PGM_TRMNTN_CD, FAC_NAME, ZIP_CD variables
 
-# Question 2
+### Question 2
 
-## Part (a)
+#### Part (a)
 
 ```{python}
 
@@ -66,7 +70,14 @@ After reading the tasks for this problem set, I pulled the PRVDR_CTGRY_CD, PRVDR
 path = os.path.join(
     base_path, "problem-set-4-sol-cristian\pos2016.csv")
 
-df_2016 = pd.read_csv(path, sep=';')
+# Sol
+df_2016 = pd.read_csv(path)
+
+# Cris needs to read in his files this way otherwise they won't open
+# Sol can't open them unless it's with the syntax above
+# df_2016 = pd.read_csv(path, sep=';')
+
+# Keeping both here and we will comment out as needed
 
 
 # Subsetting to include only short-term hospitals
@@ -80,13 +91,11 @@ print(f"The number of hospitals reported in the data is {row_count_2016}")
 
 ```
 
-## Part (b)
+#### Part (b)
 
-> According to the Kaiser Family Foundation, "there are nearly 5,000 short-term, acute care hospitals in the United States." This number is considerably lower than the one we find in our data. There are two reasons that can explain this discrepancy. First, we know this datset will include hospitals that are no longer active, which would increase the number of facilities it is reporting. Second, this number references "acute care hospitals." These facilities ["primarily provides short-term medical treatment for patients with severe or urgent health issues. These institutions — common in small towns and rural areas — deliver comprehensive and specialized medical care for conditions that require immediate attention."] {https://www.kff.org/report-section/a-look-at-rural-hospital-closures-and-implications-for-access-to-care-three-case-studies-issue-brief/}. Although our data is subsetted for short-term facilities, it can be considering other categories of hospitals, such as psychiatric, research, or specialty hospitals. 
+> According to the Kaiser Family Foundation, "there are nearly 5,000 short-term, acute care hospitals in the United States." This number is considerably lower than the one we find in our data. There are two reasons that can explain this discrepancy. First, we know this datset will include hospitals that are no longer active, which would increase the number of facilities it is reporting. Second, this number references "acute care hospitals." These facilities \["primarily provides short-term medical treatment for patients with severe or urgent health issues. These institutions — common in small towns and rural areas — deliver comprehensive and specialized medical care for conditions that require immediate attention."\] {https://www.kff.org/report-section/a-look-at-rural-hospital-closures-and-implications-for-access-to-care-three-case-studies-issue-brief/}. Although our data is subsetted for short-term facilities, it can be considering other categories of hospitals, such as psychiatric, research, or specialty hospitals.
 
-
-
-## Question 3
+### Question 3
 
 ```{python}
 
@@ -98,8 +107,10 @@ print(f"The number of hospitals reported in the data is {row_count_2016}")
 path = os.path.join(
     base_path, "problem-set-4-sol-cristian\pos2017.csv")
 
-df_2017 = pd.read_csv(path, sep=';')
-
+# Sol
+df_2017 = pd.read_csv(path)
+# Cris
+#df_2017 = pd.read_csv(path, sep=';')
 
 # Subsetting to include only short-term hospitals
 df_2017 = df_2017[(df_2017["PRVDR_CTGRY_CD"] == 1) &
@@ -124,12 +135,12 @@ path = os.path.join(
     base_path, "problem-set-4-sol-cristian\pos2018.csv")
 
 
-# When trying to read in file, it seems that the encoding is different than what python assumes by default. I got an error, which I fed to ChatGPT
+# Sol: When trying to read in file, it seems that the encoding is different than what python assumes by default. I got an error, which I fed to ChatGPT
 # It corrected my code to include the encoding:
-
-# Reading in file
-df_2018 = pd.read_csv(path, sep=';')
-
+# 
+df_2018 = pd.read_csv(path, encoding="ISO-8859-1")
+# Cris worked fine
+# df_2018 = pd.read_csv(path, sep=';')
 
 # Subsetting to include only short-term hospitals
 df_2018 = df_2018[(df_2018["PRVDR_CTGRY_CD"] == 1) &
@@ -143,7 +154,6 @@ print(f"The number of hospitals reported in the 2018 data is {row_count_2018}")
 
 ```
 
-
 ```{python}
 
 #########################
@@ -154,7 +164,11 @@ print(f"The number of hospitals reported in the 2018 data is {row_count_2018}")
 path = os.path.join(
     base_path, "problem-set-4-sol-cristian\pos2019.csv")
 
-df_2019 = pd.read_csv(path, sep=';')
+
+# Sol
+df_2019 = pd.read_csv(path, encoding="ISO-8859-1")
+# Cris
+#df_2019 = pd.read_csv(path, sep=';')
 
 
 # Subsetting to include only short-term hospitals
@@ -192,17 +206,14 @@ df_final = pd.concat([df_2016, df_2017, df_2018, df_2019],
 
 
 # Creating a small df with the number of observations each year
-
 df_obs = {
     "Year": [2016, 2017, 2018, 2019],
     "Count": [row_count_2016, row_count_2017, row_count_2018, row_count_2019]
 }
-
 df_obs = pd.DataFrame(df_obs)
 
 
 # Plotting
-
 alt.Chart(df_obs, title="Number of Observations by Year").mark_bar().encode(
     alt.X("Year:N", title="Year"),
     alt.Y("Count:Q", title="Number of Observations")
@@ -212,16 +223,16 @@ alt.Chart(df_obs, title="Number of Observations by Year").mark_bar().encode(
 )
 ```
 
+### Question 4
 
-
-## Question 4
-
-### Part (a)
+#### Part (a)
 
 ```{python}
 
+# Getting unique provider numbers by year
 df_unique = df_final.groupby("YEAR")["PRVDR_NUM"].nunique().reset_index()
 
+# Plotting
 alt.Chart(df_unique, title="Number of Unique Observations by Year").mark_bar().encode(
     alt.X("YEAR:N", title="Year"),
     alt.Y("PRVDR_NUM:Q", title="Number of Unique Observations")
@@ -232,27 +243,35 @@ alt.Chart(df_unique, title="Number of Unique Observations by Year").mark_bar().e
 
 ```
 
-### Part (b) FLAG
+#### Part (b) FLAG
 
 > looks the same? something might be wrong
 
-## Identify hospital closures in POS file (15 pts) (*)
+## Identify hospital closures in POS file (15 pts) (\*)
 
-1. 
+### Question 1
+
 ```{python}
+
+# Creating a data set with active hospitals in 2016
 df_active2016 = df_2016[df_2016["PGM_TRMNTN_CD"] == 0]
 
+# Creating a data set with observations from other years...
 df_closed_by2019 = df_final[df_final["YEAR"]!=2016]
+# ... and subsetting to only include non-active hospitals
 df_closed_by2019 = df_closed_by2019[df_closed_by2019["PGM_TRMNTN_CD"]!=0]
 
+# Merging the two datasets
 df_closed_by2019 = df_active2016.merge(df_closed_by2019[["PRVDR_NUM","PGM_TRMNTN_CD", "YEAR"]], on="PRVDR_NUM", how="left", indicator=True)
 
 df_closed_by2019["_merge"].unique()
 # Didn't find any active in 2016 that dissapear later.
 
+# Getting hospitals that were open in 2016 but closed in subsequent years
 df_closed_by2019 = df_closed_by2019[df_closed_by2019["_merge"] == "both"]
 
-df_closed_by2019.sort_values(by=['PRVDR_NUM', 'YEAR_y'], ascending=[False, True], inplace=True)
+# Sorting by provider number and then year to get all observations for same hospital together, in chronological order
+df_closed_by2019.sort_values(by=["PRVDR_NUM", "YEAR_y"], ascending=[False, True], inplace=True)
 
 # Keep the year in which the hospital has the status of not active for the first time.
 df_closed_by2019 = df_closed_by2019.groupby("PRVDR_NUM").aggregate(
@@ -261,11 +280,14 @@ df_closed_by2019 = df_closed_by2019.groupby("PRVDR_NUM").aggregate(
     YEAR     = ("YEAR_y", "first")
 ).reset_index()
 
+# Counting number of observartions
 row_closed_by2019 = df_closed_by2019.shape[0]
+
+
 print(f"Number of hospitals that were active in 2016 and were suspected to have closed by 2019: {row_closed_by2019}")
 ```
 
-2. 
+### Question 2
 
 ```{python}
 # Sorting by name
@@ -273,13 +295,18 @@ df_closed_by2019.sort_values(by=['FAC_NAME'], inplace=True)
 df_closed_by2019.head(10)
 ```
 
-3. 
+### Question 3
+
 ```{python}
+
+# Creating a new dataset to work out of
 df_active = df_final
 
+# Creating a dummy column identifying active hospitals
 df_active['ACTIVES'] = df_active['PGM_TRMNTN_CD'].apply(
     lambda x: 1 if x == 0 else 0)
 
+# Creating a dummy column identifying non-active hospitals
 df_active['NO_ACTIVE'] = df_active['PGM_TRMNTN_CD'].apply(
     lambda x: 1 if x != 0 else 0)
 
@@ -289,6 +316,7 @@ df_nactive_zip = df_active.groupby(["ZIP_CD","YEAR"]).aggregate(
     NO_ACTIVE = ("NO_ACTIVE", "sum"),
     TOTAL     = ("FAC_NAME" , "count")
 ).reset_index()
+
 
 df_zip_fail = df_closed_by2019.merge(df_nactive_zip, on =["ZIP_CD"], how = "left", indicator=True)
 
@@ -310,7 +338,8 @@ df_zip_fail["DECREASE"] = df_zip_fail["CHANGE"] - df_zip_fail["PAST"]
 # Zip codes where the number of hospital do not decrease in the year of clousure
 df_zip_fail = df_zip_fail[df_zip_fail["DECREASE"]>=0]
 ```
-    a.
+
+\#### Part (a)
 
 ```{python}
 df_closed_by2019 = df_closed_by2019.merge(df_zip_fail[["ZIP_CD","DECREASE"]], on = "ZIP_CD", how="left")
@@ -329,39 +358,142 @@ nhospital_corrected = df_closed_by2019.shape[0]
 
 print(f"Number of hospitals left after correction for potential merge: {nhospital_corrected}")
 ```
-    b.
+
+#### Part (b)
+
 ```{python}
 # Sorting by name
 df_closed_by2019.sort_values(by=['FAC_NAME'], inplace=True)
 df_closed_by2019.head(10)
 ```
 
-## Download Census zip code shapefile (10 pt) 
+## Download Census zip code shapefile (10 pt)
 
-1. 
-    a.
-    b. 
-2. 
+### Question 1
 
-## Calculate zip code’s distance to the nearest hospital (20 pts) (*)
+#### Part (a)
 
-1. 
-2. 
-3. 
-4. 
-    a.
-    b.
-    c.
-5. 
-    a.
-    b.
-    c.
-    
+| File Extension | Description |
+|----------------|------------------------------------------------------|
+| **.dbf** | Stores attribute data in a table format, similar to a database or spreadsheet. |
+| **.prj** | Contains projection and coordinate system information for accurate representation of the Earth's sphere into a plane. |
+| **.shp** | Holds spatial data like points, lines, and polygons. |
+| **.shx** | An index file linking the .shp spatial data to the attribute data in .dbf |
+| **.xml** | Stores metadata |
+
+All together, these files create the "shapefile," storing both attribute and spatial data.
+
+#### Part (b)
+
+```{python}
+
+
+data_path = r"C:\Users\solch\OneDrive\Documentos\2024 - autumn quarter\python II\problem-set-4-sol-cristian\data"
+
+# List of file paths
+file_paths = ["gz_2010_us_860_00_500k.dbf ", "gz_2010_us_860_00_500k.prj ",
+              "gz_2010_us_860_00_500k.shp", "gz_2010_us_860_00_500k.shx",
+              "gz_2010_us_860_00_500k.xml"]
+
+# Function to get file sizes
+
+
+def get_file_sizes(paths):
+    for file in paths:
+        path = path = os.path.join(
+            data_path, file)
+        size = os.path.getsize(path)  # Size in bytes
+        print(f"{os.path.basename(file)}: {size / 1024:.2f} KB")  # Size in KB
+        # Got help from AI for conversion
+
+
+# Measure and print file sizes
+get_file_sizes(file_paths)
+
+```
+
+### Question 2
+
+```{python}
+
+# Reading in shapefile
+path = path = os.path.join(data_path, "gz_2010_us_860_00_500k.shp")
+shp_file = gpd.read_file(path)
+
+# Getting column names to identify where I can find the ZIP
+shp_file.columns
+
+# Subsetting Texas
+texas_shp = shp_file[shp_file["ZCTA5"].str.startswith(
+    ("75", "76", "77", "78", "79"))]
+
+# Creating new df to work on
+df_2016_tx = df_2016
+# Turning zip column into a string for better data handling
+df_2016_tx["ZIP_CD"] = df_2016_tx["ZIP_CD"] .astype(str)
+# Subsetting to only TX
+df_2016_tx = df_2016_tx[df_2016_tx["ZIP_CD"].str.startswith(
+    ("75", "76", "77", "78", "79")) & (df_2016_tx["ZIP_CD"].str.len() == 7)]
+# Cleaning strings
+df_2016_tx["ZIP_CD"] = df_2016_tx["ZIP_CD"].str.replace(
+    '.0', '', regex=False)
+# Counting hospitals by ZIP
+df_2016_tx = df_2016_tx.groupby("ZIP_CD").size().reset_index()
+# Renaming columns to merge properly
+df_2016_tx.columns = ["ZCTA5", "COUNT"]
+# Making NAs 0
+df_2016_tx["COUNT"] = df_2016_tx["COUNT"].fillna(0)
+
+
+# Merging
+df_2016_tx = texas_shp.merge(df_2016_tx, on="ZCTA5", how="left")
+
+fig, ax = plt.subplots(1, 1, figsize=(10, 8))
+df_2016_tx.plot(column="COUNT", cmap='OrRd',
+                    linewidth=0.8, ax=ax, edgecolor='0.8', legend=True)
+ax.set_title("Number of Hospitals per Zip Code in Texas (2016)")
+plt.show()
+
+
+
+```
+
+
+
+## Calculate zip code’s distance to the nearest hospital (20 pts) (\*)
+
+### Question 1
+
+### Question 2
+
+### Question 3
+
+### Question 4
+
+#### Part (a)
+
+#### Part (b)
+
+#### Part (c)
+
+#### Part (d)
+
+### Question 5
+
+#### Part (a)
+
+#### Part (b)
+
+#### Part (c)
+
 ## Effects of closures on access in Texas (15 pts)
 
-1. 
-2. 
-3. 
-4. 
+### Question 1
 
-## Reflecting on the exercise (10 pts) 
+### Question 2
+
+### Question 3
+
+### Question 4
+
+## Reflecting on the exercise (10 pts)
