@@ -52,9 +52,9 @@ warnings.filterwarnings('ignore')
 
 # Working directory
 # Cris
-base_path = r"C:\Users\Cristian\Documents\GitHub\ppha30538_fall2024"
+# base_path = r"C:\Users\Cristian\Documents\GitHub\ppha30538_fall2024"
 # Sol
-# base_path = r"C:\Users\solch\OneDrive\Documentos\2024 - autumn quarter\python II"
+base_path = r"C:\Users\solch\OneDrive\Documentos\2024 - autumn quarter\python II"
 
 ```
 
@@ -68,14 +68,14 @@ After reading the tasks for this problem set, I pulled the PRVDR_CTGRY_CD, PRVDR
 
 # reading in file for 2016
 path = os.path.join(
-    base_path, "problem-set-4-sol-cristian\pos2016.csv")
+    base_path, "problem-set-4-sol-cristian\data\pos2016.csv")
 
 # Sol
-#df_2016 = pd.read_csv(path)
+df_2016 = pd.read_csv(path)
 
 # Cris needs to read in his files this way otherwise they won't open
 # Sol can't open them unless it's with the syntax above
-df_2016 = pd.read_csv(path, sep=';')
+# df_2016 = pd.read_csv(path, sep=';')
 
 # Keeping both here and we will comment out as needed
 
@@ -105,12 +105,12 @@ print(f"The number of hospitals reported in the data is {row_count_2016}")
 
 # reading in file for 2017
 path = os.path.join(
-    base_path, "problem-set-4-sol-cristian\pos2017.csv")
+    base_path, "problem-set-4-sol-cristian\data\pos2017.csv")
 
 # Sol
-#df_2017 = pd.read_csv(path)
+df_2017 = pd.read_csv(path)
 # Cris
-df_2017 = pd.read_csv(path, sep=';')
+# df_2017 = pd.read_csv(path, sep=';')
 
 # Subsetting to include only short-term hospitals
 df_2017 = df_2017[(df_2017["PRVDR_CTGRY_CD"] == 1) &
@@ -132,15 +132,15 @@ print(f"The number of hospitals reported in the 2017 data is {row_count_2017}")
 # Setting path
 
 path = os.path.join(
-    base_path, "problem-set-4-sol-cristian\pos2018.csv")
+    base_path, "problem-set-4-sol-cristian\data\pos2018.csv")
 
 
 # Sol: When trying to read in file, it seems that the encoding is different than what python assumes by default. I got an error, which I fed to ChatGPT
 # It corrected my code to include the encoding:
 # 
-#df_2018 = pd.read_csv(path, encoding="ISO-8859-1")
+df_2018 = pd.read_csv(path, encoding="ISO-8859-1")
 # Cris worked fine
-df_2018 = pd.read_csv(path, sep=';')
+#df_2018 = pd.read_csv(path, sep=';')
 
 # Subsetting to include only short-term hospitals
 df_2018 = df_2018[(df_2018["PRVDR_CTGRY_CD"] == 1) &
@@ -162,13 +162,13 @@ print(f"The number of hospitals reported in the 2018 data is {row_count_2018}")
 
 # reading in file for 2019
 path = os.path.join(
-    base_path, "problem-set-4-sol-cristian\pos2019.csv")
+    base_path, "problem-set-4-sol-cristian\data\pos2019.csv")
 
 
 # Sol
-#df_2019 = pd.read_csv(path, encoding="ISO-8859-1")
+df_2019 = pd.read_csv(path, encoding="ISO-8859-1")
 # Cris
-df_2019 = pd.read_csv(path, sep=';')
+#df_2019 = pd.read_csv(path, sep=';')
 
 
 # Subsetting to include only short-term hospitals
@@ -251,6 +251,7 @@ alt.Chart(df_unique, title="Number of Unique Observations by Year").mark_bar().e
 
 ### Question 1
 
+CRIS
 ```{python}
 
 # Creating a data set with active hospitals in 2016
@@ -287,29 +288,13 @@ row_closed_by2019 = df_closed_by2019.shape[0]
 print(f"Number of hospitals that were active in 2016 and were suspected to have closed by 2019: {row_closed_by2019}")
 ```
 
-```{python}
-# Creating a data set with active hospitals in 2016
-df_active2016 = df_2016[df_2016["PGM_TRMNTN_CD"] == 0]
-
-df_closed2017 = df_active2016.merge(df_2017[["PRVDR_NUM","PGM_TRMNTN_CD", "YEAR"]], on = "PRVDR_NUM", how = "left", indicator = True)
-df_closed2017 = df_closed2017[df_closed2017["PGM_TRMNTN_CD_y"]!=0]
-
-df_closed2018 = df_active2016.merge(df_2018[["PRVDR_NUM","PGM_TRMNTN_CD", "YEAR"]], on = "PRVDR_NUM", how = "left", indicator = True)
-df_closed2018 = df_closed2018[df_closed2018["PGM_TRMNTN_CD_y"]!=0]
-
-df_closed2019 = df_active2016.merge(df_2019[["PRVDR_NUM","PGM_TRMNTN_CD", "YEAR"]], on = "PRVDR_NUM", how = "left", indicator = True)
-df_closed2019 = df_closed2019[df_closed2019["PGM_TRMNTN_CD_y"]!=0]
-
-df_closedby2019_new = pd.concat([df_closed2017, df_closed2018,              df_closed2019], ignore_index=True)
-
-df_closedby2019_new.sort_values(by=["PRVDR_NUM", "YEAR_y"], ascending=[False, True], inplace=True)
-```
-### Question 2
 
 ```{python}
 # Sorting by name
 df_closed_by2019.sort_values(by=['FAC_NAME'], inplace=True)
 df_closed_by2019.head(10)
+
+df_closed_by2019.shape[0]
 ```
 
 ### Question 3
@@ -328,47 +313,55 @@ df_active['NO_ACTIVE'] = df_active['PGM_TRMNTN_CD'].apply(
     lambda x: 1 if x != 0 else 0)
 
 # Number of active, non active and total hospitals by zip and year
-df_nactive_zip = df_active.groupby(["ZIP_CD","YEAR"]).aggregate(
-    ACTIVE    = ("ACTIVES"  , "sum"),
-    NO_ACTIVE = ("NO_ACTIVE", "sum"),
-    TOTAL     = ("FAC_NAME" , "count")
+df_nactive_zip = df_active.groupby(["ZIP_CD", "YEAR"]).aggregate(
+    ACTIVE=("ACTIVES", "sum"),
+    NO_ACTIVE=("NO_ACTIVE", "sum"),
+    TOTAL=("FAC_NAME", "count")
 ).reset_index()
 
-# Merge to identify in which ZIP CODE ocurre hospital closures
-df_zip_fail = df_closed_by2019.merge(df_nactive_zip, on =["ZIP_CD"], how = "left", indicator=True)
+# Merge to identify in which ZIP CODE ocurred hospital closures
+df_zip_fail = df_closed_by2019.merge(
+    df_nactive_zip, on=["ZIP_CD"], how="left", indicator=True)
 
-df_zip_fail_new = df_zip_fail[(df_zip_fail['YEAR_x'] == df_zip_fail['YEAR_y']) | (df_zip_fail['YEAR_x'] - 1 == df_zip_fail['YEAR_y'])]
+# Keeping the year of change 
+df_zip_fail = df_zip_fail[(df_zip_fail['YEAR_x'] == df_zip_fail['YEAR_y']) | (
+    df_zip_fail['YEAR_x'] - 1 == df_zip_fail['YEAR_y'])]
 
-df_zip_fail = df_zip_fail.rename(columns={'_merge': 'merge_status'})df_zip_fail_new = df_zip_fail_new.rename(columns={'_merge': 'merge_status'})
+#df_zip_fail = df_zip_fail.rename(columns={'_merge': 'merge_status'})
 
-comparison = df_zip_fail.merge(df_zip_fail_new, on="PRVDR_NUM", how="left", indicator = True)
-comparison = comparison[comparison["_merge"]=="left_only"]
+#comparison = df_zip_fail.merge(
+    #df_zip_fail_new, on="PRVDR_NUM", how="left", indicator=True)
+#comparison = comparison[comparison["_merge"] == "left_only"]
 
+# This refers to year x
 df_zip_fail['CHANGE_YEAR'] = df_active['PGM_TRMNTN_CD'].apply(
     lambda x: 1 if x != 0 else 0)
 
 df_zip_fail['STATUS'] = 'Other'
-df_zip_fail.loc[df_zip_fail['YEAR_x'] - 1 == df_zip_fail['YEAR_y'], 'STATUS'] = 'PAST'
-df_zip_fail.loc[df_zip_fail['YEAR_x'] == df_zip_fail['YEAR_y'], 'STATUS'] = 'CHANGE'
+df_zip_fail.loc[df_zip_fail['YEAR_x'] - 1 ==
+                df_zip_fail['YEAR_y'], 'STATUS'] = 'BEFORE_CLOSURE'
+df_zip_fail.loc[df_zip_fail['YEAR_x'] ==
+                df_zip_fail['YEAR_y'], 'STATUS'] = 'CLOSED'
 
-df_zip_fail = df_zip_fail[["ZIP_CD","STATUS","ACTIVE"]]
+df_zip_fail = df_zip_fail[["ZIP_CD", "STATUS", "ACTIVE"]]
 
-df_zip_fail = df_zip_fail.pivot(index="ZIP_CD", columns="STATUS", values="ACTIVE").reset_index()
+df_zip_fail = df_zip_fail.pivot(
+    index="ZIP_CD", columns="STATUS", values="ACTIVE").reset_index()
 
-df_zip_fail["DECREASE"] = df_zip_fail["CHANGE"] - df_zip_fail["PAST"]
+df_zip_fail["INCREASE"] = df_zip_fail["BEFORE_CLOSURE"] - df_zip_fail["CLOSED"]
 
 # Zip codes where the number of hospital do not decrease in the year of clousure
-df_zip_fail = df_zip_fail[df_zip_fail["DECREASE"]>=0]
+df_zip_fail = df_zip_fail[df_zip_fail["INCREASE"] <= 0]
 ```
 
 #### Part (a)
 
 ```{python}
-df_closed_by2019 = df_closed_by2019.merge(df_zip_fail[["ZIP_CD","DECREASE"]], on = "ZIP_CD", how="left")
+df_closed_by2019 = df_closed_by2019.merge(df_zip_fail[["ZIP_CD","INCREASE"]], on = "ZIP_CD", how="left")
 
-df_closed_by2019["DECREASE"].unique()
+df_closed_by2019["INCREASE"].unique()
 
-df_closed_by2019["POT_MERGE"] = df_closed_by2019["DECREASE"].apply(
+df_closed_by2019["POT_MERGE"] = df_closed_by2019["INCREASE"].apply(
     lambda x: 1 if x == 0 else 0)
 
 pot_merge = df_closed_by2019[df_closed_by2019["POT_MERGE"]==1]["POT_MERGE"].value_counts().iloc[0]
@@ -449,6 +442,9 @@ shp_file.columns
 texas_shp = shp_file[shp_file["ZCTA5"].str.startswith(
     ("75", "76", "77", "78", "79"))]
 
+texas_shp["ZCTA5"].nunique()
+
+
 # Creating new df to work on
 df_2016_tx = df_2016
 # Turning zip column into a string for better data handling
@@ -463,15 +459,17 @@ df_2016_tx["ZIP_CD"] = df_2016_tx["ZIP_CD"].str.replace(
 df_2016_tx = df_2016_tx.groupby("ZIP_CD").size().reset_index()
 # Renaming columns to merge properly
 df_2016_tx.columns = ["ZCTA5", "COUNT"]
-# Making NAs 0
-df_2016_tx["COUNT"] = df_2016_tx["COUNT"].fillna(0)
+
+
 
 
 # Merging
 df_2016_tx = texas_shp.merge(df_2016_tx, on="ZCTA5", how="left")
+# Making NAs = 0
+df_2016_tx["COUNT"] = df_2016_tx["COUNT"].fillna(0)
 
 fig, ax = plt.subplots(1, 1, figsize=(10, 8))
-df_2016_tx.plot(column="COUNT", cmap='OrRd',
+df_2016_tx.plot(column="COUNT", cmap="Blues",
                     linewidth=0.8, ax=ax, edgecolor='0.8', legend=True)
 ax.set_title("Number of Hospitals per Zip Code in Texas (2016)")
 plt.show()
