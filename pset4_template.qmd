@@ -52,9 +52,9 @@ warnings.filterwarnings('ignore')
 
 # Working directory
 # Cris
-# base_path = r"C:\Users\Cristian\Documents\GitHub\ppha30538_fall2024"
+base_path = r"C:\Users\Cristian\Documents\GitHub\ppha30538_fall2024"
 # Sol
-base_path = r"C:\Users\solch\OneDrive\Documentos\2024 - autumn quarter\python II"
+# base_path = r"C:\Users\solch\OneDrive\Documentos\2024 - autumn quarter\python II"
 
 ```
 
@@ -71,11 +71,11 @@ path = os.path.join(
     base_path, "problem-set-4-sol-cristian\pos2016.csv")
 
 # Sol
-df_2016 = pd.read_csv(path)
+#df_2016 = pd.read_csv(path)
 
 # Cris needs to read in his files this way otherwise they won't open
 # Sol can't open them unless it's with the syntax above
-# df_2016 = pd.read_csv(path, sep=';')
+df_2016 = pd.read_csv(path, sep=';')
 
 # Keeping both here and we will comment out as needed
 
@@ -108,9 +108,9 @@ path = os.path.join(
     base_path, "problem-set-4-sol-cristian\pos2017.csv")
 
 # Sol
-df_2017 = pd.read_csv(path)
+#df_2017 = pd.read_csv(path)
 # Cris
-#df_2017 = pd.read_csv(path, sep=';')
+df_2017 = pd.read_csv(path, sep=';')
 
 # Subsetting to include only short-term hospitals
 df_2017 = df_2017[(df_2017["PRVDR_CTGRY_CD"] == 1) &
@@ -138,9 +138,9 @@ path = os.path.join(
 # Sol: When trying to read in file, it seems that the encoding is different than what python assumes by default. I got an error, which I fed to ChatGPT
 # It corrected my code to include the encoding:
 # 
-df_2018 = pd.read_csv(path, encoding="ISO-8859-1")
+#df_2018 = pd.read_csv(path, encoding="ISO-8859-1")
 # Cris worked fine
-# df_2018 = pd.read_csv(path, sep=';')
+df_2018 = pd.read_csv(path, sep=';')
 
 # Subsetting to include only short-term hospitals
 df_2018 = df_2018[(df_2018["PRVDR_CTGRY_CD"] == 1) &
@@ -166,9 +166,9 @@ path = os.path.join(
 
 
 # Sol
-df_2019 = pd.read_csv(path, encoding="ISO-8859-1")
+#df_2019 = pd.read_csv(path, encoding="ISO-8859-1")
 # Cris
-#df_2019 = pd.read_csv(path, sep=';')
+df_2019 = pd.read_csv(path, sep=';')
 
 
 # Subsetting to include only short-term hospitals
@@ -259,13 +259,13 @@ df_active2016 = df_2016[df_2016["PGM_TRMNTN_CD"] == 0]
 # Creating a data set with observations from other years...
 df_closed_by2019 = df_final[df_final["YEAR"]!=2016]
 # ... and subsetting to only include non-active hospitals
-df_closed_by2019 = df_closed_by2019[df_closed_by2019["PGM_TRMNTN_CD"]!=0]
+df_closed_by2019 = df_closed_by2019[df_closed_by2019["PGM_TRMNTN_CD"]!=0]   
 
 # Merging the two datasets
 df_closed_by2019 = df_active2016.merge(df_closed_by2019[["PRVDR_NUM","PGM_TRMNTN_CD", "YEAR"]], on="PRVDR_NUM", how="left", indicator=True)
 
 df_closed_by2019["_merge"].unique()
-# Didn't find any active in 2016 that dissapear later.
+# Didn't find any active in 2016 that dissapear from the data later.
 
 # Getting hospitals that were open in 2016 but closed in subsequent years
 df_closed_by2019 = df_closed_by2019[df_closed_by2019["_merge"] == "both"]
@@ -287,6 +287,23 @@ row_closed_by2019 = df_closed_by2019.shape[0]
 print(f"Number of hospitals that were active in 2016 and were suspected to have closed by 2019: {row_closed_by2019}")
 ```
 
+```{python}
+# Creating a data set with active hospitals in 2016
+df_active2016 = df_2016[df_2016["PGM_TRMNTN_CD"] == 0]
+
+df_closed2017 = df_active2016.merge(df_2017[["PRVDR_NUM","PGM_TRMNTN_CD", "YEAR"]], on = "PRVDR_NUM", how = "left", indicator = True)
+df_closed2017 = df_closed2017[df_closed2017["PGM_TRMNTN_CD_y"]!=0]
+
+df_closed2018 = df_active2016.merge(df_2018[["PRVDR_NUM","PGM_TRMNTN_CD", "YEAR"]], on = "PRVDR_NUM", how = "left", indicator = True)
+df_closed2018 = df_closed2018[df_closed2018["PGM_TRMNTN_CD_y"]!=0]
+
+df_closed2019 = df_active2016.merge(df_2019[["PRVDR_NUM","PGM_TRMNTN_CD", "YEAR"]], on = "PRVDR_NUM", how = "left", indicator = True)
+df_closed2019 = df_closed2019[df_closed2019["PGM_TRMNTN_CD_y"]!=0]
+
+df_closedby2019_new = pd.concat([df_closed2017, df_closed2018,              df_closed2019], ignore_index=True)
+
+df_closedby2019_new.sort_values(by=["PRVDR_NUM", "YEAR_y"], ascending=[False, True], inplace=True)
+```
 ### Question 2
 
 ```{python}
@@ -317,10 +334,15 @@ df_nactive_zip = df_active.groupby(["ZIP_CD","YEAR"]).aggregate(
     TOTAL     = ("FAC_NAME" , "count")
 ).reset_index()
 
-
+# Merge to identify in which ZIP CODE ocurre hospital closures
 df_zip_fail = df_closed_by2019.merge(df_nactive_zip, on =["ZIP_CD"], how = "left", indicator=True)
 
-df_zip_fail = df_zip_fail[(df_zip_fail['YEAR_x'] == df_zip_fail['YEAR_y']) | (df_zip_fail['YEAR_x'] - 1 == df_zip_fail['YEAR_y'])]
+df_zip_fail_new = df_zip_fail[(df_zip_fail['YEAR_x'] == df_zip_fail['YEAR_y']) | (df_zip_fail['YEAR_x'] - 1 == df_zip_fail['YEAR_y'])]
+
+df_zip_fail = df_zip_fail.rename(columns={'_merge': 'merge_status'})df_zip_fail_new = df_zip_fail_new.rename(columns={'_merge': 'merge_status'})
+
+comparison = df_zip_fail.merge(df_zip_fail_new, on="PRVDR_NUM", how="left", indicator = True)
+comparison = comparison[comparison["_merge"]=="left_only"]
 
 df_zip_fail['CHANGE_YEAR'] = df_active['PGM_TRMNTN_CD'].apply(
     lambda x: 1 if x != 0 else 0)
@@ -339,7 +361,7 @@ df_zip_fail["DECREASE"] = df_zip_fail["CHANGE"] - df_zip_fail["PAST"]
 df_zip_fail = df_zip_fail[df_zip_fail["DECREASE"]>=0]
 ```
 
-\#### Part (a)
+#### Part (a)
 
 ```{python}
 df_closed_by2019 = df_closed_by2019.merge(df_zip_fail[["ZIP_CD","DECREASE"]], on = "ZIP_CD", how="left")
