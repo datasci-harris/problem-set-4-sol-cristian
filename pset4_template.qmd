@@ -25,7 +25,8 @@ include-before-body:
 
 > “I have uploaded the names of anyone else other than my partner and I worked with on the problem set here” (1 point)
 
-> Late coins used this pset: \*\*\_\_\*\* Late coins left after submission: \*\*\_\_\*\*
+> Late coins used this pset: Each of us used **1** 
+> Late coins left after submission: Each of us still have **3**
 
 ## Style Points (10 pts)
 
@@ -244,15 +245,14 @@ alt.Chart(df_unique, title="Number of Unique Observations by Year").mark_bar().e
 
 ```
 
-#### Part (b) FLAG
+#### Part (b)
 
-> looks the same? something might be wrong
+> The data features one unique hospital per year.
 
 ## Identify hospital closures in POS file (15 pts) (\*)
 
 ### Question 1
 
-CRIS
 ```{python}
 
 # Creating a data set with active hospitals in 2016
@@ -328,6 +328,12 @@ df_zip_fail = df_closed_by2019.merge(
 df_zip_fail = df_zip_fail[(df_zip_fail['YEAR_x'] == df_zip_fail['YEAR_y']) | (
     df_zip_fail['YEAR_x'] - 1 == df_zip_fail['YEAR_y'])]
 
+#df_zip_fail = df_zip_fail.rename(columns={'_merge': 'merge_status'})
+
+#comparison = df_zip_fail.merge(
+    #df_zip_fail_new, on="PRVDR_NUM", how="left", indicator=True)
+#comparison = comparison[comparison["_merge"] == "left_only"]
+
 # This refers to year x
 df_zip_fail['CHANGE_YEAR'] = df_active['PGM_TRMNTN_CD'].apply(
     lambda x: 1 if x != 0 else 0)
@@ -352,12 +358,10 @@ df_zip_fail = df_zip_fail[df_zip_fail["INCREASE"] <= 0]
 #### Part (a)
 
 ```{python}
-# Corrected hospital closure dataset
 df_closed_by2019 = df_closed_by2019.merge(df_zip_fail[["ZIP_CD","INCREASE"]], on = "ZIP_CD", how="left")
 
 df_closed_by2019["INCREASE"].unique()
 
-# Identifying hospital that potentially were merged. 
 df_closed_by2019["POT_MERGE"] = df_closed_by2019["INCREASE"].apply(
     lambda x: 1 if x == 0 else 0)
 
@@ -399,11 +403,7 @@ All together, these files create the "shapefile," storing both attribute and spa
 
 ```{python}
 
-#Sol
-#data_path = r"C:\Users\solch\OneDrive\Documentos\2024 - autumn quarter\python II\problem-set-4-sol-cristian\data"
-
-#Cris
-data_path = r"C:\Users\Cristian\Documents\GitHub\ppha30538_fall2024\problem-set-4-sol-cristian\data"
+data_path = r"C:\Users\solch\OneDrive\Documentos\2024 - autumn quarter\python II\problem-set-4-sol-cristian\data"
 
 # List of file paths
 file_paths = ["gz_2010_us_860_00_500k.dbf ", "gz_2010_us_860_00_500k.prj ",
@@ -442,8 +442,6 @@ shp_file.columns
 texas_shp = shp_file[shp_file["ZCTA5"].str.startswith(
     ("75", "76", "77", "78", "79"))]
 
-texas_shp["ZCTA5"].nunique()
-
 
 # Creating new df to work on
 df_2016_tx = df_2016
@@ -461,20 +459,32 @@ df_2016_tx = df_2016_tx.groupby("ZIP_CD").size().reset_index()
 df_2016_tx.columns = ["ZCTA5", "COUNT"]
 
 
-
-
 # Merging
-df_2016_tx = texas_shp.merge(df_2016_tx, on="ZCTA5", how="left")
+gdf_2016_tx = texas_shp.merge(df_2016_tx, on="ZCTA5", how="left")
 # Making NAs = 0
-df_2016_tx["COUNT"] = df_2016_tx["COUNT"].fillna(0)
+gdf_2016_tx["COUNT"] = gdf_2016_tx["COUNT"].fillna(0)
+
+```
+
+```{python}
+
+##############
+#  Plotting  #
+##############
 
 fig, ax = plt.subplots(1, 1, figsize=(10, 8))
-df_2016_tx.plot(column="COUNT", cmap="Blues",
-                    linewidth=0.8, ax=ax, edgecolor='0.8', legend=True)
+gdf_2016_tx.plot(column="COUNT", cmap="Greens",
+                    linewidth=0.8, ax=ax, edgecolor="0.6", legend=True)
 ax.set_title("Number of Hospitals per Zip Code in Texas (2016)")
+
+# Remove axis and ticks
+ax.set_xticks([])
+ax.set_yticks([])
+
 plt.show()
 
 ```
+
 
 
 ## Calculate zip code’s distance to the nearest hospital (20 pts) (\*)
@@ -631,20 +641,182 @@ zips_texas_with_distance.shape
 
 #### Part (a)
 
+
 #### Part (b)
 
 #### Part (c)
 
 ## Effects of closures on access in Texas (15 pts)
 
-df_closed_by2019 dataset from 
-
 ### Question 1
+
+```{python}
+
+# Turning ZIP_CD into a string
+df_closed_by2019["ZIP_CD"] = df_closed_by2019["ZIP_CD"].astype(str)
+# Selecting TX zipcodes
+df_closed_tx = df_closed_by2019[df_closed_by2019["ZIP_CD"].str.startswith(
+    ("75", "76", "77", "78", "79")) & (df_closed_by2019["ZIP_CD"].str.len() == 7)]
+# Cleaning for aesthetic purposes
+df_closed_tx["ZIP_CD"] = df_closed_tx["ZIP_CD"].str.replace(r'\.0$', '', regex=True)
+
+# Counting closures by 
+df_closed_zip_tx = df_closed_tx.groupby("ZIP_CD").size().reset_index()
+df_closed_zip_tx.columns = ["ZIP", "hospital_closures"]
+
+print(df_closed_zip_tx)
+
+```
+
 
 ### Question 2
 
+```{python}
+
+# Renaming to merge
+df_closed_zip_tx.columns = ["ZCTA5", "hospital_closures"]
+
+# Merging the dataset counting hopsitals by ZIP with dataset of closed hospitals by 
+# ZIP 
+gdf_tx = gdf_2016_tx.merge(df_closed_zip_tx, on="ZCTA5", how= "left" )
+
+# Replace NA values with 0
+gdf_tx["hospital_closures"] = gdf_tx["hospital_closures"].fillna(0)
+```
+
+```{python}
+
+##############
+#  Plotting  #
+##############
+
+
+# Setting red color for zips with closures
+# Chat GPT helped with this. Query: Since my variable is binary, can my scale be binary as well?
+from matplotlib.colors import ListedColormap
+from matplotlib.lines import Line2D
+
+binary_cmap = ListedColormap(["lightgray", "red"])
+
+# Making chart
+fig, ax = plt.subplots(1, 1, figsize=(10, 8))
+gdf_tx.plot(column= "hospital_closures", cmap= binary_cmap,
+           linewidth=0.6, ax=ax, edgecolor='0.6')
+
+
+# I also asked AI to help me make this plot prettier. The following lines were coded # with some of its suggestions
+
+# Title
+ax.set_title("Texas ZIP Codes with Hospital Closures (2017-2019)", fontsize=12, weight='bold', pad=20) 
+
+# Legend
+closure_marker = [Line2D([0], [0], marker='o', color='w', label='Closures',
+                         markersize=10, markerfacecolor='red')]
+ax.legend(handles=closure_marker, loc='lower right', fontsize=10)
+
+# Remove axis and ticks
+ax.set_xticks([])
+ax.set_yticks([])
+
+plt.show()
+
+```
+
+
 ### Question 3
+
+```{python}
+
+# Filter geodf to only include those with hospital closures
+gdf_tx_closures = gdf_tx[gdf_tx["hospital_closures"] > 0]
+
+# Creating a 10 mi buffer
+# (Projection is in meters, mile is 1609.34m, so 10 miles =  1609.34 *10 = 16093.4)
+gdf_tx_closures["buffer"] = gdf_tx_closures.geometry.buffer(16093.4)
+
+# Renaming column to idenitfy ZCTA of indirectly affected better after merging
+gdf_tx_closures = gdf_tx_closures.rename(columns={"ZCTA5": "ZCTA5_buffer"})
+
+
+# Spatial join to merge geodfs together
+# AI inadvertedly helped on this while I did a Google search.
+# Google search: spatial join on python, gemini showed me some code
+gdf_tx_indirect_closures = gpd.sjoin(
+    gdf_tx, gdf_tx_closures, how="inner", predicate="intersects")
+
+# Subsetting buffer Zips so they don't get counted twice
+buffer_zips = gdf_tx_indirect_closures["ZCTA5_buffer"].unique()
+
+# Get indirectly affected zips
+indirectly_affected_zips = gdf_tx_indirect_closures["ZCTA5"].unique()
+
+indirectly_affected_zips = indirectly_affected_zips[~np.isin(
+    indirectly_affected_zips, buffer_zips)]
+
+# Counting indirectly affected ZIP codes
+indirectly_affected_zip_count = len(indirectly_affected_zips)
+
+print("Number of indirectly affected ZIP codes:", indirectly_affected_zip_count)
+
+```
 
 ### Question 4
 
+```{python}
+
+# Creating a dummy that reflects hospital closures
+gdf_tx["affected"] = np.where(gdf_tx["hospital_closures"] > 0, 1, 0)
+
+# Re-assigning 0 as 2 when ZCTA is indirectly affected
+gdf_tx["affected"] = np.where(
+    (gdf_tx["ZCTA5"].isin(indirectly_affected_zips)), 0.5, gdf_tx["affected"]
+)
+
+# Check the distribution of the affected variable to make sure this worked properly
+closure_status_distribution = gdf_tx["affected"].value_counts()
+print(closure_status_distribution)
+
+```
+
+```{python}
+
+##############
+#  Plotting  #
+##############
+
+# Choosing colors
+closure_cmap = ListedColormap(["lightgreen", "khaki", "lightcoral"])
+
+fig, ax = plt.subplots(1, 1, figsize=(10, 8))
+gdf_tx.plot(column= "affected", cmap= closure_cmap,
+           linewidth=0.6, ax=ax, edgecolor='0.6')
+
+
+# I also asked AI to help me make this plot prettier. The following lines were coded # with some of its suggestions
+
+# Title
+ax.set_title("Texas ZIP Codes affected by Hospital Closures (2017-2019)", fontsize=12, weight='bold', pad=20) 
+
+# Legend
+handles = [
+    plt.Line2D([0], [0], marker="o", color="w", markerfacecolor= "lightgreen", markersize=10, label= "No Closure"),
+    plt.Line2D([0], [0], marker="o", color="w", markerfacecolor= "khaki", markersize=10, label= "Indirectly Affected"),
+    plt.Line2D([0], [0], marker="o", color="w", markerfacecolor= "lightcoral", markersize=10, label= "Directly Affected")
+]
+
+ax.legend(handles=handles, title="Closure Status")
+
+# Remove axis and ticks
+ax.set_xticks([])
+ax.set_yticks([])
+
+plt.show()
+```
+
 ## Reflecting on the exercise (10 pts)
+
+### Part (a)
+
+One potential problem with the "first-pass" approach is that it does not consider hospitals that are opening. For instance, the net number of hospitals in a ZIP code will remain unchanged if one closes and a brand new one opens, leading to an inaccurate assessment of the healthcare landscape. Additionally, ZIP codes can change, and this might flag an area for having a decreased number of hospitals when a facility has simply relocated to a different ZIP code. Similarly, if a hospital moves to a new campus serving the same area but is now located in a neighboring ZIP code, this could lead to an erroneous count.
+
+To address these issues, a more effective administrative approach would be to change the way mergers and acquisitions are recorded. For the purpose of accurately determining the number of operating hospitals, it is not necessary to consider whether facilities are under new administration. Instead, these cases should be recorded as "active" with the same CMS code, regardless of name changes. Implementing a tracking system for facility transitions would help ensure that data analysts can maintain accurate records of operational hospitals. While this administrative choice remains unchanged, we must acknowledge that data analysts are often limited by existing practices and rely heavily on approaches such as the first-pass method.
