@@ -45,6 +45,7 @@ import chardet
 import os
 import geopandas as gpd
 import matplotlib.pyplot as plt
+import time
 
 alt.renderers.enable("png")
 
@@ -52,9 +53,9 @@ warnings.filterwarnings('ignore')
 
 # Working directory
 # Cris
-# base_path = r"C:\Users\Cristian\Documents\GitHub\ppha30538_fall2024"
+base_path = r"C:\Users\Cristian\Documents\GitHub\ppha30538_fall2024"
 # Sol
-base_path = r"C:\Users\solch\OneDrive\Documentos\2024 - autumn quarter\python II"
+#base_path = r"C:\Users\solch\OneDrive\Documentos\2024 - autumn quarter\python II"
 
 ```
 
@@ -71,11 +72,11 @@ path = os.path.join(
     base_path, "problem-set-4-sol-cristian\data\pos2016.csv")
 
 # Sol
-df_2016 = pd.read_csv(path)
+# df_2016 = pd.read_csv(path)
 
 # Cris needs to read in his files this way otherwise they won't open
 # Sol can't open them unless it's with the syntax above
-# df_2016 = pd.read_csv(path, sep=';')
+df_2016 = pd.read_csv(path, sep=';')
 
 # Keeping both here and we will comment out as needed
 
@@ -108,9 +109,9 @@ path = os.path.join(
     base_path, "problem-set-4-sol-cristian\data\pos2017.csv")
 
 # Sol
-df_2017 = pd.read_csv(path)
+#df_2017 = pd.read_csv(path)
 # Cris
-# df_2017 = pd.read_csv(path, sep=';')
+df_2017 = pd.read_csv(path, sep=';')
 
 # Subsetting to include only short-term hospitals
 df_2017 = df_2017[(df_2017["PRVDR_CTGRY_CD"] == 1) &
@@ -138,9 +139,9 @@ path = os.path.join(
 # Sol: When trying to read in file, it seems that the encoding is different than what python assumes by default. I got an error, which I fed to ChatGPT
 # It corrected my code to include the encoding:
 # 
-df_2018 = pd.read_csv(path, encoding="ISO-8859-1")
+#df_2018 = pd.read_csv(path, encoding="ISO-8859-1")
 # Cris worked fine
-#df_2018 = pd.read_csv(path, sep=';')
+df_2018 = pd.read_csv(path, sep=';')
 
 # Subsetting to include only short-term hospitals
 df_2018 = df_2018[(df_2018["PRVDR_CTGRY_CD"] == 1) &
@@ -166,9 +167,9 @@ path = os.path.join(
 
 
 # Sol
-df_2019 = pd.read_csv(path, encoding="ISO-8859-1")
+#df_2019 = pd.read_csv(path, encoding="ISO-8859-1")
 # Cris
-#df_2019 = pd.read_csv(path, sep=';')
+df_2019 = pd.read_csv(path, sep=';')
 
 
 # Subsetting to include only short-term hospitals
@@ -402,8 +403,11 @@ All together, these files create the "shapefile," storing both attribute and spa
 
 ```{python}
 
+#Sol
+#data_path = r"C:\Users\solch\OneDrive\Documentos\2024 - autumn quarter\python II\problem-set-4-sol-cristian\data"
 
-data_path = r"C:\Users\solch\OneDrive\Documentos\2024 - autumn quarter\python II\problem-set-4-sol-cristian\data"
+#Cris
+data_path = r"C:\Users\Cristian\Documents\GitHub\ppha30538_fall2024\problem-set-4-sol-cristian\data"
 
 # List of file paths
 file_paths = ["gz_2010_us_860_00_500k.dbf ", "gz_2010_us_860_00_500k.prj ",
@@ -474,30 +478,135 @@ df_2016_tx.plot(column="COUNT", cmap="Blues",
 ax.set_title("Number of Hospitals per Zip Code in Texas (2016)")
 plt.show()
 
-
-
 ```
-
 
 
 ## Calculate zip code’s distance to the nearest hospital (20 pts) (\*)
 
 ### Question 1
+```{python}
+zips_all_centroids = shp_file.copy()
+zips_all_centroids['centroid'] = shp_file.geometry.centroid
+
+# Dimensions of the new GeoDataFrame:
+zips_all_centroids.shape
+zips_all_centroids.columns
+```
+Meaning of each column: 
+ + GEO_ID: Identifier for geographic area.
+ + ZCTA5: ZIP Code Tabulation Area.
+ + NAME: Description/Labe of an area.
+ + LSAD: Legal/Statistical Area Description; typically used to describe the type of area.
+ + CENSUSAREA: Area of the ZIP code region.
+ + geometry: represent a polygon geometry of each ZIP code area.
+ + centroid: centroid of each ZIP code area as a point geometry.
+
 
 ### Question 2
+```{python}
+# Zip codes in Texas
+zips_texas_centroids = zips_all_centroids[zips_all_centroids["ZCTA5"].str.startswith(
+    ("75", "76", "77", "78", "79"))]
+
+# For subsetting all zip codes in Texas or a bordering state, we will use the followint prefixes:
+# Texas TX: 75, 76, 77, 78, 79
+# New Mexico NM: 87, 88
+# Oklahoma OK: 73, 74
+# Arkansas : 716, 717, 718, 719, 72
+# Louisiana: 700, 715
+# AR and LS are grouped using from 70 to 72.
+
+zips_texas_borderstates_centroids  = zips_all_centroids[zips_all_centroids["ZCTA5"].str.startswith(
+    ("75", "76", "77", "78", "79",
+     "87", "88",
+     "73","74",
+     "70", "71", "72"))]
+
+nzip_tx = zips_texas_centroids["ZCTA5"].nunique()
+nzip_tx_borders = zips_texas_borderstates_centroids["ZCTA5"].nunique()
+
+print(f"Number of unique zip codes in zips_texas_centroids: {nzip_tx}")
+print(f"Number of unique zip codes in nzip_tx_borders: {nzip_tx_borders}")
+```
 
 ### Question 3
+```{python}
+df_2016_tx_border = df_2016
+# Turning zip column into a string for better data handling
+df_2016_tx_border["ZIP_CD"] = df_2016_tx_border["ZIP_CD"] .astype(str)
+# Hospitals per ZIP
+df_2016_tx_border = df_2016_tx_border.groupby("ZIP_CD").size().reset_index()
+# Renaming columns to merge properly
+df_2016_tx_border.columns = ["ZCTA5", "COUNT"]
+# ZIPS with at least one hospital
+df_2016_tx_border = df_2016_tx_border[df_2016_tx_border["COUNT"]>0]
+
+# Merging
+zips_withhospital_centroids= zips_texas_borderstates_centroids.merge(df_2016_tx_border, on="ZCTA5", how="left")
+
+zips_withhospital_centroids.columns
+```
+I am merging the previously created GeoDataFrame, zips_texas_borderstates_centroids, which contains all ZIP codes in Texas and bordering states, with the dataset which includes the number of hospitals per ZIP code. Since the former dataset contains the ZIP codes of interest (TX and border states), we are using a left merge to retain these ZIP codes for analysis.
+
+The merge is performed on the ZCTA5 variable, and we are preserving all geographical variables: GEO_ID, LSAD, CENSUSAREA, geometry, and centroid. Additionally, we are adding the number of hospitals in each ZIP code area.
+
 
 ### Question 4
 
 #### Part (a)
 
+```{python}
+# Subseting with 10 zip codes
+zips_texas_centroids_10 = zips_texas_centroids[:10]
+zips_texas_centroids.shape
+
+# To estimate the time for this exercise
+start_time = time.time()
+distances = []
+for index, row in zips_texas_centroids_10.iterrows():
+    # For each row (centroide), it will calculate the minimum distance to the centroide in the dataset with hospitales per zip. 
+    nearest_geom = zips_withhospital_centroids.geometry.apply(lambda geom: row['centroid'].distance(geom)).min()
+    distances.append(nearest_geom)
+
+end_time = time.time()
+time_spent = end_time - start_time
+
+zips_texas_centroids_10['distance_to_nearest_hospital'] = distances
+print(f"Time of this excercise: {time_spent}s")
+
+estimation = zips_texas_centroids.shape[0]/10*time_spent
+print(f"Estimated time for the whole GeoDataFrame: {estimation}s")
+```
+
+
 #### Part (b)
+```{python}
+# Using the whole GeoDataFrame
+start_time = time.time()
+distances = []
+for index, row in zips_texas_centroids.iterrows():
+    # For each row (centroide), it will calculate the minimum distance to the centroide in the dataset with hospitales per zip. 
+    nearest_geom = zips_withhospital_centroids.geometry.apply(lambda geom: row['centroid'].distance(geom)).min()
+    distances.append(nearest_geom)
+
+end_time = time.time()
+time_spent = end_time - start_time
+
+zips_texas_centroids['distance_to_nearest_hospital'] = distances
+print(f"It takes: {time_spent}s")
+```
+It took: 516.0482306480408
 
 #### Part (c)
 
-#### Part (d)
+```{python}
+path = path = os.path.join(data_path, "gz_2010_us_860_00_500k.prj")
 
+with open(path, "r") as prj_file:
+    prj_content = prj_file.read() 
+    print("Projection content:", prj_content)
+    
+``` 
 ### Question 5
 
 #### Part (a)
