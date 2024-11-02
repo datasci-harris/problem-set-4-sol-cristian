@@ -328,12 +328,6 @@ df_zip_fail = df_closed_by2019.merge(
 df_zip_fail = df_zip_fail[(df_zip_fail['YEAR_x'] == df_zip_fail['YEAR_y']) | (
     df_zip_fail['YEAR_x'] - 1 == df_zip_fail['YEAR_y'])]
 
-#df_zip_fail = df_zip_fail.rename(columns={'_merge': 'merge_status'})
-
-#comparison = df_zip_fail.merge(
-    #df_zip_fail_new, on="PRVDR_NUM", how="left", indicator=True)
-#comparison = comparison[comparison["_merge"] == "left_only"]
-
 # This refers to year x
 df_zip_fail['CHANGE_YEAR'] = df_active['PGM_TRMNTN_CD'].apply(
     lambda x: 1 if x != 0 else 0)
@@ -358,10 +352,12 @@ df_zip_fail = df_zip_fail[df_zip_fail["INCREASE"] <= 0]
 #### Part (a)
 
 ```{python}
+# Corrected hospital closure dataset
 df_closed_by2019 = df_closed_by2019.merge(df_zip_fail[["ZIP_CD","INCREASE"]], on = "ZIP_CD", how="left")
 
 df_closed_by2019["INCREASE"].unique()
 
+# Identifying hospital that potentially were merged. 
 df_closed_by2019["POT_MERGE"] = df_closed_by2019["INCREASE"].apply(
     lambda x: 1 if x == 0 else 0)
 
@@ -490,6 +486,7 @@ zips_all_centroids['centroid'] = shp_file.geometry.centroid
 
 # Dimensions of the new GeoDataFrame:
 zips_all_centroids.shape
+
 zips_all_centroids.columns
 ```
 Meaning of each column: 
@@ -557,19 +554,25 @@ The merge is performed on the ZCTA5 variable, and we are preserving all geograph
 
 ```{python}
 # Subseting with 10 zip codes
-zips_texas_centroids_10 = zips_texas_centroids[:10]
-zips_texas_centroids.shape
+zips_texas_with_distance_10 = zips_texas_centroids[:10][["GEO_ID", "ZCTA5", "geometry", "centroid"]]
 
+zips_texas_with_distance_10.columns
+zips_texas_with_distance_10.shape
 # To estimate the time for this exercise
 start_time = time.time()
-distances = []
-for index, row in zips_texas_centroids_10.iterrows():
-    # For each row (centroide), it will calculate the minimum distance to the centroide in the dataset with hospitales per zip. 
-    nearest_geom = zips_withhospital_centroids.geometry.apply(lambda geom: row['centroid'].distance(geom)).min()
-    distances.append(nearest_geom)
+
+zips_texas_with_distance_10 = gpd.sjoin_nearest(
+    zips_texas_with_distance_10, 
+    zips_withhospital_centroids,
+    how = "inner",
+    distance_col = "distance"
+)
 
 end_time = time.time()
 time_spent = end_time - start_time
+time_spent
+
+zips_texas_with_distance_10.shape
 
 zips_texas_centroids_10['distance_to_nearest_hospital'] = distances
 print(f"Time of this excercise: {time_spent}s")
@@ -581,21 +584,28 @@ print(f"Estimated time for the whole GeoDataFrame: {estimation}s")
 
 #### Part (b)
 ```{python}
-# Using the whole GeoDataFrame
+zips_texas_with_distance = zips_texas_centroids[["GEO_ID", "ZCTA5", "geometry", "centroid"]]
+
+zips_texas_with_distance.columns
+zips_texas_with_distance.shape
+# To estimate the time for this exercise
 start_time = time.time()
-distances = []
-for index, row in zips_texas_centroids.iterrows():
-    # For each row (centroide), it will calculate the minimum distance to the centroide in the dataset with hospitales per zip. 
-    nearest_geom = zips_withhospital_centroids.geometry.apply(lambda geom: row['centroid'].distance(geom)).min()
-    distances.append(nearest_geom)
+
+zips_texas_with_distance = gpd.sjoin_nearest(
+    zips_texas_with_distance, 
+    zips_withhospital_centroids,
+    how = "inner",
+    distance_col = "distance"
+)
 
 end_time = time.time()
 time_spent = end_time - start_time
+time_spent
 
 zips_texas_centroids['distance_to_nearest_hospital'] = distances
 print(f"It takes: {time_spent}s")
 ```
-It took: 516.0482306480408
+It took: 676.96 seconds, which is at lest 100 seconds less than the estimation. 
 
 #### Part (c)
 
@@ -605,9 +615,19 @@ path = path = os.path.join(data_path, "gz_2010_us_860_00_500k.prj")
 with open(path, "r") as prj_file:
     prj_content = prj_file.read() 
     print("Projection content:", prj_content)
-    
+
 ``` 
+The unit shown in the .prj file is "Degree." One degree is approximately equivalent to 69 miles.
+
 ### Question 5
+```{python}
+# pendiente, agrupar por zip code para sacer la distnancia promedio keeping variables para graficarlo
+zips_texas_with_distance.groupby("ZIP_CD").size().reset_index()
+zips_texas_with_distance.shape
+
+```
+
+
 
 #### Part (a)
 
@@ -616,6 +636,8 @@ with open(path, "r") as prj_file:
 #### Part (c)
 
 ## Effects of closures on access in Texas (15 pts)
+
+df_closed_by2019 dataset from 
 
 ### Question 1
 
