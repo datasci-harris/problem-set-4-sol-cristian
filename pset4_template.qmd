@@ -328,12 +328,6 @@ df_zip_fail = df_closed_by2019.merge(
 df_zip_fail = df_zip_fail[(df_zip_fail['YEAR_x'] == df_zip_fail['YEAR_y']) | (
     df_zip_fail['YEAR_x'] - 1 == df_zip_fail['YEAR_y'])]
 
-#df_zip_fail = df_zip_fail.rename(columns={'_merge': 'merge_status'})
-
-#comparison = df_zip_fail.merge(
-    #df_zip_fail_new, on="PRVDR_NUM", how="left", indicator=True)
-#comparison = comparison[comparison["_merge"] == "left_only"]
-
 # This refers to year x
 df_zip_fail['CHANGE_YEAR'] = df_active['PGM_TRMNTN_CD'].apply(
     lambda x: 1 if x != 0 else 0)
@@ -402,8 +396,10 @@ All together, these files create the "shapefile," storing both attribute and spa
 #### Part (b)
 
 ```{python}
-
-data_path = r"C:\Users\solch\OneDrive\Documentos\2024 - autumn quarter\python II\problem-set-4-sol-cristian\data"
+# Sol
+# data_path = r"C:\Users\solch\OneDrive\Documentos\2024 - autumn quarter\python II\problem-set-4-sol-cristian\data"
+# Cris
+data_path = r"C:\Users\Cristian\Documents\GitHub\ppha30538_fall2024\problem-set-4-sol-cristian\data"
 
 # List of file paths
 file_paths = ["gz_2010_us_860_00_500k.dbf ", "gz_2010_us_860_00_500k.prj ",
@@ -496,7 +492,6 @@ zips_all_centroids['centroid'] = shp_file.geometry.centroid
 
 # Dimensions of the new GeoDataFrame:
 zips_all_centroids.shape
-
 zips_all_centroids.columns
 ```
 Meaning of each column: 
@@ -508,14 +503,14 @@ Meaning of each column:
  + geometry: represent a polygon geometry of each ZIP code area.
  + centroid: centroid of each ZIP code area as a point geometry.
 
-
 ### Question 2
+
 ```{python}
 # Zip codes in Texas
 zips_texas_centroids = zips_all_centroids[zips_all_centroids["ZCTA5"].str.startswith(
     ("75", "76", "77", "78", "79"))]
 
-# For subsetting all zip codes in Texas or a bordering state, we will use the followint prefixes:
+# For subsetting all zip codes in Texas or a bordering state, we will use the following prefixes:
 # Texas TX: 75, 76, 77, 78, 79
 # New Mexico NM: 87, 88
 # Oklahoma OK: 73, 74
@@ -538,9 +533,19 @@ print(f"Number of unique zip codes in nzip_tx_borders: {nzip_tx_borders}")
 
 ### Question 3
 ```{python}
-df_2016_tx_border = df_2016
+df_2016_tx_border = df_2016[df_2016["PGM_TRMNTN_CD"]==0]
 # Turning zip column into a string for better data handling
-df_2016_tx_border["ZIP_CD"] = df_2016_tx_border["ZIP_CD"] .astype(str)
+df_2016_tx_border["ZIP_CD"] = df_2016_tx_border["ZIP_CD"].astype(str)
+
+df_2016_tx_border  = df_2016_tx_border[df_2016_tx_border["ZIP_CD"].str.startswith(
+    ("75", "76", "77", "78", "79",
+     "87", "88",
+     "73","74",
+     "70", "71", "72"))]
+
+df_2016_tx_border["ZIP_CD"] = df_2016_tx_border["ZIP_CD"].str.replace(
+    '.0', '', regex=False)
+
 # Hospitals per ZIP
 df_2016_tx_border = df_2016_tx_border.groupby("ZIP_CD").size().reset_index()
 # Renaming columns to merge properly
@@ -550,10 +555,10 @@ df_2016_tx_border = df_2016_tx_border[df_2016_tx_border["COUNT"]>0]
 
 # Merging
 zips_withhospital_centroids= zips_texas_borderstates_centroids.merge(df_2016_tx_border, on="ZCTA5", how="left")
+zips_withhospital_centroids = zips_withhospital_centroids[zips_withhospital_centroids["COUNT"]>0]
 
-zips_withhospital_centroids.columns
 ```
-I am merging the previously created GeoDataFrame, zips_texas_borderstates_centroids, which contains all ZIP codes in Texas and bordering states, with the dataset which includes the number of hospitals per ZIP code. Since the former dataset contains the ZIP codes of interest (TX and border states), we are using a left merge to retain these ZIP codes for analysis.
+I am merging the previously created GeoDataFrame, zips_texas_borderstates_centroids, which contains all ZIP codes in Texas and bordering states, with the dataset which includes the number of hospitals per ZIP code. Since the later dataset contains the ZIP codes of interest (with at leat 1 hospital in 2016), we are using a right merge to retain these ZIP codes for analysis.
 
 The merge is performed on the ZCTA5 variable, and we are preserving all geographical variables: GEO_ID, LSAD, CENSUSAREA, geometry, and centroid. Additionally, we are adding the number of hospitals in each ZIP code area.
 
@@ -565,26 +570,20 @@ The merge is performed on the ZCTA5 variable, and we are preserving all geograph
 ```{python}
 # Subseting with 10 zip codes
 zips_texas_with_distance_10 = zips_texas_centroids[:10][["GEO_ID", "ZCTA5", "geometry", "centroid"]]
-
-zips_texas_with_distance_10.columns
 zips_texas_with_distance_10.shape
+
+zips_texas_with_distance_10
 # To estimate the time for this exercise
 start_time = time.time()
-
 zips_texas_with_distance_10 = gpd.sjoin_nearest(
-    zips_texas_with_distance_10, 
+    zips_texas_with_distance_10,
     zips_withhospital_centroids,
-    how = "inner",
+    how = "left",
     distance_col = "distance"
 )
-
 end_time = time.time()
 time_spent = end_time - start_time
-time_spent
 
-zips_texas_with_distance_10.shape
-
-zips_texas_centroids_10['distance_to_nearest_hospital'] = distances
 print(f"Time of this excercise: {time_spent}s")
 
 estimation = zips_texas_centroids.shape[0]/10*time_spent
@@ -596,26 +595,22 @@ print(f"Estimated time for the whole GeoDataFrame: {estimation}s")
 ```{python}
 zips_texas_with_distance = zips_texas_centroids[["GEO_ID", "ZCTA5", "geometry", "centroid"]]
 
-zips_texas_with_distance.columns
-zips_texas_with_distance.shape
 # To estimate the time for this exercise
 start_time = time.time()
-
 zips_texas_with_distance = gpd.sjoin_nearest(
     zips_texas_with_distance, 
     zips_withhospital_centroids,
     how = "inner",
     distance_col = "distance"
 )
-
 end_time = time.time()
 time_spent = end_time - start_time
 time_spent
 
-zips_texas_centroids['distance_to_nearest_hospital'] = distances
-print(f"It takes: {time_spent}s")
+print(f"It takes: {time_spent} seconds")
+
 ```
-It took: 676.96 seconds, which is at lest 100 seconds less than the estimation. 
+My estimation was lower than the actual value.
 
 #### Part (c)
 
@@ -625,27 +620,58 @@ path = path = os.path.join(data_path, "gz_2010_us_860_00_500k.prj")
 with open(path, "r") as prj_file:
     prj_content = prj_file.read() 
     print("Projection content:", prj_content)
-
 ``` 
 The unit shown in the .prj file is "Degree." One degree is approximately equivalent to 69 miles.
 
 ### Question 5
 ```{python}
-# pendiente, agrupar por zip code para sacer la distnancia promedio keeping variables para graficarlo
-zips_texas_with_distance.groupby("ZIP_CD").size().reset_index()
-zips_texas_with_distance.shape
+# Average distance to the nearest hospital for each zip code
+zips_texas_avg_distance = zips_texas_with_distance.groupby("ZCTA5_left").aggregate(
+    avg_distance = ("distance", "mean"),
+    geometry = ("geometry", "first"),
+    centroid = ("centroid_left", "first")
+).reset_index()
 
+# Average distance in miles per zip code
+zips_texas_avg_distance["avg_distance"] = zips_texas_avg_distance["avg_distance"]*69
 ```
-
-
 
 #### Part (a)
 
+```{python}
+zips_texas_avg_distance_gdf = gpd.GeoDataFrame(
+    zips_texas_avg_distance,
+    geometry="geometry",
+    crs="EPSG:4269"
+)
+
+print(zips_texas_avg_distance_gdf.crs)
+```
+The units are in degree. However en the distances were multiplied by 69 to convert them to miles.
 
 #### Part (b)
+```{python}
+# Average distance in miles
+zips_texas_avg_distance_gdf["avg_distance"].mean()
+```
+The average distance is 2.75 miles. In the dataset we can see that there are many zeros, which make the average to be lower. A zero distance indicate that there is a hospital in the zip code. The value then make sense.
 
 #### Part (c)
 
+```{python}
+fig, ax = plt.subplots(1, 1, figsize=(12, 12))
+zips_texas_avg_distance_gdf.plot(
+    column="avg_distance",       
+    cmap="OrRd",                 
+    legend=True,            
+    legend_kwds={
+        'label': "Average Distance to Nearest Hospital (miles)",
+        'orientation': "vertical" 
+    },
+    ax=ax
+)
+```
+From the graph, we can see that some areas in the borders have the greater distance to hospitals. 
 ## Effects of closures on access in Texas (15 pts)
 
 ### Question 1
@@ -820,3 +846,9 @@ plt.show()
 One potential problem with the "first-pass" approach is that it does not consider hospitals that are opening. For instance, the net number of hospitals in a ZIP code will remain unchanged if one closes and a brand new one opens, leading to an inaccurate assessment of the healthcare landscape. Additionally, ZIP codes can change, and this might flag an area for having a decreased number of hospitals when a facility has simply relocated to a different ZIP code. Similarly, if a hospital moves to a new campus serving the same area but is now located in a neighboring ZIP code, this could lead to an erroneous count.
 
 To address these issues, a more effective administrative approach would be to change the way mergers and acquisitions are recorded. For the purpose of accurately determining the number of operating hospitals, it is not necessary to consider whether facilities are under new administration. Instead, these cases should be recorded as "active" with the same CMS code, regardless of name changes. Implementing a tracking system for facility transitions would help ensure that data analysts can maintain accurate records of operational hospitals. While this administrative choice remains unchanged, we must acknowledge that data analysts are often limited by existing practices and rely heavily on approaches such as the first-pass method.
+
+### Part (b)
+
+The approach used to identify ZIP codes affected by closures considers only a single dimension: a 10-mile distance. It does not account for factors such as road networks or transportation infrastructure, population density in each area, health needs, or the presence of other healthcare facilities.
+
+An improvement to this approach would be to consider additional variables. The number of people living in the area and the availability of other healthcare facilities are especially important. For instance, if a hospital closes in a densely populated area but there are many other healthcare services available, that area may be less affected compared to other ZIP codes with fewer healthcare options. In addition, we can include in the map the presence of roads which is very important for access to healh facilities. 
