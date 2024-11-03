@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Cristian Bancayan &amp; Sol Rivas Lopes">
+<meta name="dcterms.date" content="2024-11-02">
+
+<title>Problem Set 4</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="pset4_template_cris_sol_files/libs/clipboard/clipboard.min.js"></script>
+<script src="pset4_template_cris_sol_files/libs/quarto-html/quarto.js"></script>
+<script src="pset4_template_cris_sol_files/libs/quarto-html/popper.min.js"></script>
+<script src="pset4_template_cris_sol_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="pset4_template_cris_sol_files/libs/quarto-html/anchor.min.js"></script>
+<link href="pset4_template_cris_sol_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="pset4_template_cris_sol_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="pset4_template_cris_sol_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="pset4_template_cris_sol_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="pset4_template_cris_sol_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Problem Set 4</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Cristian Bancayan &amp; Sol Rivas Lopes </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 2, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><strong>PS4:</strong> Due Sat Nov 2 at 5:00PM Central. Worth 100 points.</p>
+<blockquote class="blockquote">
+<p>“This submission is our work alone and complies with the 30538 integrity policy.” Add your initials to indicate your agreement: <strong>CB</strong> <strong>SCRL</strong></p>
+</blockquote>
+<blockquote class="blockquote">
+<p>“I have uploaded the names of anyone else other than my partner and I worked with on the problem set here” (1 point)</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Late coins used this pset: Each of us used <strong>1</strong> Late coins left after submission: Each of us still have <strong>3</strong></p>
+</blockquote>
+<section id="style-points-10-pts" class="level2">
+<h2 class="anchored" data-anchor-id="style-points-10-pts">Style Points (10 pts)</h2>
+</section>
+<section id="submission-steps-10-pts" class="level2">
+<h2 class="anchored" data-anchor-id="submission-steps-10-pts">Submission Steps (10 pts)</h2>
+</section>
+<section id="download-and-explore-the-provider-of-services-pos-file-10-pts" class="level2">
+<h2 class="anchored" data-anchor-id="download-and-explore-the-provider-of-services-pos-file-10-pts">Download and explore the Provider of Services (POS) file (10 pts)</h2>
+<section id="question-1" class="level3">
+<h3 class="anchored" data-anchor-id="question-1">Question 1</h3>
+<div id="5c9a0389" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> datetime <span class="im">as</span> dt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> chardet</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>alt.renderers.enable(<span class="st">"png"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Working directory</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Cris</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>base_path <span class="op">=</span> <span class="vs">r"C:\Users\Cristian\Documents\GitHub\ppha30538_fall2024"</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Sol</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#base_path = r"C:\Users\solch\OneDrive\Documentos\2024 - autumn quarter\python II"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After reading the tasks for this problem set, I pulled the PRVDR_CTGRY_CD, PRVDR_CTGRY_SBTYP_CD, PRVDR_NUM, PGM_TRMNTN_CD, FAC_NAME, ZIP_CD variables</p>
+</section>
+<section id="question-2" class="level3">
+<h3 class="anchored" data-anchor-id="question-2">Question 2</h3>
+<section id="part-a" class="level4">
+<h4 class="anchored" data-anchor-id="part-a">Part (a)</h4>
+<div id="3607bc9b" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reading in file for 2016</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> os.path.join(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    base_path, <span class="st">"problem-set-4-sol-cristian\data\pos2016.csv"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Sol</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># df_2016 = pd.read_csv(path)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Cris needs to read in his files this way otherwise they won't open</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Sol can't open them unless it's with the syntax above</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>df_2016 <span class="op">=</span> pd.read_csv(path, sep<span class="op">=</span><span class="st">';'</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Subsetting to include only short-term hospitals</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>df_2016 <span class="op">=</span> df_2016[(df_2016[<span class="st">"PRVDR_CTGRY_CD"</span>] <span class="op">==</span> <span class="dv">1</span>) <span class="op">&amp;</span> (df_2016[<span class="st">"PRVDR_CTGRY_SBTYP_CD"</span>] <span class="op">==</span> <span class="dv">1</span>)]</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Counting rows to get number of hospitals reported in data</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>row_count_2016 <span class="op">=</span> df_2016.shape[<span class="dv">0</span>]</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The number of hospitals reported in the data is </span><span class="sc">{</span>row_count_2016<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The number of hospitals reported in the data is 7245</code></pre>
+</div>
+</div>
+</section>
+<section id="part-b" class="level4">
+<h4 class="anchored" data-anchor-id="part-b">Part (b)</h4>
+<blockquote class="blockquote">
+<p>According to the Kaiser Family Foundation, “there are nearly 5,000 short-term, acute care hospitals in the United States.” This number is considerably lower than the one we find in our data. There are two reasons that can explain this discrepancy. First, we know this datset will include hospitals that are no longer active, which would increase the number of facilities it is reporting. Second, this number references “acute care hospitals.” These facilities [“primarily provides short-term medical treatment for patients with severe or urgent health issues. These institutions — common in small towns and rural areas — deliver comprehensive and specialized medical care for conditions that require immediate attention.”] {https://www.kff.org/report-section/a-look-at-rural-hospital-closures-and-implications-for-access-to-care-three-case-studies-issue-brief/}. Although our data is subsetted for short-term facilities, it can be considering other categories of hospitals, such as psychiatric, research, or specialty hospitals.</p>
+</blockquote>
+</section>
+</section>
+<section id="question-3" class="level3">
+<h3 class="anchored" data-anchor-id="question-3">Question 3</h3>
+<div id="bdf347e5" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">###   2017 DATASET    </span><span class="al">###</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># reading in file for 2017</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> os.path.join(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    base_path, <span class="st">"problem-set-4-sol-cristian\data\pos2017.csv"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Sol</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#df_2017 = pd.read_csv(path)</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Cris</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>df_2017 <span class="op">=</span> pd.read_csv(path, sep<span class="op">=</span><span class="st">';'</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Subsetting to include only short-term hospitals</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>df_2017 <span class="op">=</span> df_2017[(df_2017[<span class="st">"PRVDR_CTGRY_CD"</span>] <span class="op">==</span> <span class="dv">1</span>) <span class="op">&amp;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                  (df_2017[<span class="st">"PRVDR_CTGRY_SBTYP_CD"</span>] <span class="op">==</span> <span class="dv">1</span>)]</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Counting rows to get number of hospitals reported in data</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>row_count_2017 <span class="op">=</span> df_2017.shape[<span class="dv">0</span>]</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The number of hospitals reported in the 2017 data is </span><span class="sc">{</span>row_count_2017<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The number of hospitals reported in the 2017 data is 7260</code></pre>
+</div>
+</div>
+<div id="c405799d" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">###   2018 DATASET    </span><span class="al">###</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> os.path.join(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    base_path, <span class="st">"problem-set-4-sol-cristian\data\pos2018.csv"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Sol: When trying to read in file, it seems that the encoding is different than what python assumes by default. I got an error, which I fed to ChatGPT</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># It corrected my code to include the encoding:</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#df_2018 = pd.read_csv(path, encoding="ISO-8859-1")</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Cris worked fine</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>df_2018 <span class="op">=</span> pd.read_csv(path, sep<span class="op">=</span><span class="st">';'</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Subsetting to include only short-term hospitals</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>df_2018 <span class="op">=</span> df_2018[(df_2018[<span class="st">"PRVDR_CTGRY_CD"</span>] <span class="op">==</span> <span class="dv">1</span>) <span class="op">&amp;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                  (df_2018[<span class="st">"PRVDR_CTGRY_SBTYP_CD"</span>] <span class="op">==</span> <span class="dv">1</span>)]</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>row_count_2018 <span class="op">=</span> df_2018.shape[<span class="dv">0</span>]</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The number of hospitals reported in the 2018 data is </span><span class="sc">{</span>row_count_2018<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The number of hospitals reported in the 2018 data is 7277</code></pre>
+</div>
+</div>
+<div id="02c590b4" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">###   2019 DATASET    </span><span class="al">###</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> os.path.join(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    base_path, <span class="st">"problem-set-4-sol-cristian\data\pos2019.csv"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Sol</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#df_2019 = pd.read_csv(path, encoding="ISO-8859-1")</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Cris</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>df_2019 <span class="op">=</span> pd.read_csv(path, sep<span class="op">=</span><span class="st">';'</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Subsetting to include only short-term hospitals</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>df_2019 <span class="op">=</span> df_2019[(df_2019[<span class="st">"PRVDR_CTGRY_CD"</span>] <span class="op">==</span> <span class="dv">1</span>) <span class="op">&amp;</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>                  (df_2019[<span class="st">"PRVDR_CTGRY_SBTYP_CD"</span>] <span class="op">==</span> <span class="dv">1</span>)]</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>row_count_2019 <span class="op">=</span> df_2019.shape[<span class="dv">0</span>]</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The number of hospitals reported in the 2019 data is </span><span class="sc">{</span>row_count_2019<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The number of hospitals reported in the 2019 data is 7282</code></pre>
+</div>
+</div>
+<div id="57d46cda" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">###     APPENDING     </span><span class="al">###</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding a year column in each dataset to indentify it later on</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>df_2016[<span class="st">"YEAR"</span>] <span class="op">=</span> <span class="dv">2016</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>df_2017[<span class="st">"YEAR"</span>] <span class="op">=</span> <span class="dv">2017</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>df_2018[<span class="st">"YEAR"</span>] <span class="op">=</span> <span class="dv">2018</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>df_2019[<span class="st">"YEAR"</span>] <span class="op">=</span> <span class="dv">2019</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Appending datsets together</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>df_final <span class="op">=</span> pd.concat([df_2016, df_2017, df_2018, df_2019],</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>                     ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">###     GRAPHING      </span><span class="al">###</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a small df with the number of observations each year</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>df_obs <span class="op">=</span> {</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Year"</span>: [<span class="dv">2016</span>, <span class="dv">2017</span>, <span class="dv">2018</span>, <span class="dv">2019</span>],</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Count"</span>: [row_count_2016, row_count_2017, row_count_2018, row_count_2019]</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>df_obs <span class="op">=</span> pd.DataFrame(df_obs)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>alt.Chart(df_obs, title<span class="op">=</span><span class="st">"Number of Observations by Year"</span>).mark_bar().encode(</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    alt.X(<span class="st">"Year:N"</span>, title<span class="op">=</span><span class="st">"Year"</span>),</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    alt.Y(<span class="st">"Count:Q"</span>, title<span class="op">=</span><span class="st">"Number of Observations"</span>)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>).configure_axis(</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    labelFontSize<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    titleFontSize<span class="op">=</span><span class="dv">12</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+<figure class="figure">
+<p><img src="pset4_template_cris_sol_files/figure-html/cell-7-output-1.png" width="212" height="371" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4" class="level3">
+<h3 class="anchored" data-anchor-id="question-4">Question 4</h3>
+<section id="part-a-1" class="level4">
+<h4 class="anchored" data-anchor-id="part-a-1">Part (a)</h4>
+<div id="75f252ad" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Getting unique provider numbers by year</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_unique <span class="op">=</span> df_final.groupby(<span class="st">"YEAR"</span>)[<span class="st">"PRVDR_NUM"</span>].nunique().reset_index()</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>alt.Chart(df_unique, title<span class="op">=</span><span class="st">"Number of Unique Observations by Year"</span>).mark_bar().encode(</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    alt.X(<span class="st">"YEAR:N"</span>, title<span class="op">=</span><span class="st">"Year"</span>),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    alt.Y(<span class="st">"PRVDR_NUM:Q"</span>, title<span class="op">=</span><span class="st">"Number of Unique Observations"</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>).configure_axis(</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    labelFontSize<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    titleFontSize<span class="op">=</span><span class="dv">12</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+<figure class="figure">
+<p><img src="pset4_template_cris_sol_files/figure-html/cell-8-output-1.png" width="260" height="371" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="part-b-1" class="level4">
+<h4 class="anchored" data-anchor-id="part-b-1">Part (b)</h4>
+<blockquote class="blockquote">
+<p>The data features one unique hospital per year.</p>
+</blockquote>
+</section>
+</section>
+</section>
+<section id="identify-hospital-closures-in-pos-file-15-pts" class="level2">
+<h2 class="anchored" data-anchor-id="identify-hospital-closures-in-pos-file-15-pts">Identify hospital closures in POS file (15 pts) (*)</h2>
+<section id="question-1-1" class="level3">
+<h3 class="anchored" data-anchor-id="question-1-1">Question 1</h3>
+<div id="a763f200" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a data set with active hospitals in 2016</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df_active2016 <span class="op">=</span> df_2016[df_2016[<span class="st">"PGM_TRMNTN_CD"</span>] <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a data set with observations from other years...</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>df_closed_by2019 <span class="op">=</span> df_final[df_final[<span class="st">"YEAR"</span>]<span class="op">!=</span><span class="dv">2016</span>]</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ... and subsetting to only include non-active hospitals</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>df_closed_by2019 <span class="op">=</span> df_closed_by2019[df_closed_by2019[<span class="st">"PGM_TRMNTN_CD"</span>]<span class="op">!=</span><span class="dv">0</span>]   </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Merging the two datasets</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>df_closed_by2019 <span class="op">=</span> df_active2016.merge(df_closed_by2019[[<span class="st">"PRVDR_NUM"</span>,<span class="st">"PGM_TRMNTN_CD"</span>, <span class="st">"YEAR"</span>]], on<span class="op">=</span><span class="st">"PRVDR_NUM"</span>, how<span class="op">=</span><span class="st">"left"</span>, indicator<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Getting hospitals that were open in 2016 but closed in subsequent years</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>df_closed_by2019 <span class="op">=</span> df_closed_by2019[df_closed_by2019[<span class="st">"_merge"</span>] <span class="op">==</span> <span class="st">"both"</span>]</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Sorting by provider number and then year to get all observations for same hospital together, in chronological order</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>df_closed_by2019.sort_values(by<span class="op">=</span>[<span class="st">"PRVDR_NUM"</span>, <span class="st">"YEAR_y"</span>], ascending<span class="op">=</span>[<span class="va">False</span>, <span class="va">True</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep the year in which the hospital has the status of not active for the first time.</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>df_closed_by2019 <span class="op">=</span> df_closed_by2019.groupby(<span class="st">"PRVDR_NUM"</span>).aggregate(</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    FAC_NAME <span class="op">=</span> (<span class="st">"FAC_NAME"</span>, <span class="st">"first"</span>),</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    ZIP_CD   <span class="op">=</span> (<span class="st">"ZIP_CD"</span>, <span class="st">"first"</span>),</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    YEAR     <span class="op">=</span> (<span class="st">"YEAR_y"</span>, <span class="st">"first"</span>)</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>row_closed_by2019 <span class="op">=</span> df_closed_by2019.shape[<span class="dv">0</span>]</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of hospitals that were active in 2016 and were suspected to have closed by 2019: </span><span class="sc">{</span>row_closed_by2019<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of hospitals that were active in 2016 and were suspected to have closed by 2019: 120</code></pre>
+</div>
+</div>
+<div id="a4fdfd30" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sorting by name</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df_closed_by2019.sort_values(by<span class="op">=</span>[<span class="st">'FAC_NAME'</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>df_closed_by2019.head(<span class="dv">10</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>df_closed_by2019.shape[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>120</code></pre>
+</div>
+</div>
+</section>
+<section id="question-3-1" class="level3">
+<h3 class="anchored" data-anchor-id="question-3-1">Question 3</h3>
+<div id="fdb8687a" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a new dataset to work out of</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df_active <span class="op">=</span> df_final</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a dummy column identifying active hospitals</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>df_active[<span class="st">'ACTIVES'</span>] <span class="op">=</span> df_active[<span class="st">'PGM_TRMNTN_CD'</span>].<span class="bu">apply</span>(</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: <span class="dv">1</span> <span class="cf">if</span> x <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a dummy column identifying non-active hospitals</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>df_active[<span class="st">'NO_ACTIVE'</span>] <span class="op">=</span> df_active[<span class="st">'PGM_TRMNTN_CD'</span>].<span class="bu">apply</span>(</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: <span class="dv">1</span> <span class="cf">if</span> x <span class="op">!=</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of active, non active and total hospitals by zip and year</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>df_nactive_zip <span class="op">=</span> df_active.groupby([<span class="st">"ZIP_CD"</span>, <span class="st">"YEAR"</span>]).aggregate(</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    ACTIVE<span class="op">=</span>(<span class="st">"ACTIVES"</span>, <span class="st">"sum"</span>),</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    NO_ACTIVE<span class="op">=</span>(<span class="st">"NO_ACTIVE"</span>, <span class="st">"sum"</span>),</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    TOTAL<span class="op">=</span>(<span class="st">"FAC_NAME"</span>, <span class="st">"count"</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge to identify in which ZIP CODE ocurred hospital closures</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>df_zip_fail <span class="op">=</span> df_closed_by2019.merge(</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    df_nactive_zip, on<span class="op">=</span>[<span class="st">"ZIP_CD"</span>], how<span class="op">=</span><span class="st">"left"</span>, indicator<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Keeping the year of change </span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>df_zip_fail <span class="op">=</span> df_zip_fail[(df_zip_fail[<span class="st">'YEAR_x'</span>] <span class="op">==</span> df_zip_fail[<span class="st">'YEAR_y'</span>]) <span class="op">|</span> (</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    df_zip_fail[<span class="st">'YEAR_x'</span>] <span class="op">-</span> <span class="dv">1</span> <span class="op">==</span> df_zip_fail[<span class="st">'YEAR_y'</span>])]</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="co"># This refers to year x</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>df_zip_fail[<span class="st">'CHANGE_YEAR'</span>] <span class="op">=</span> df_active[<span class="st">'PGM_TRMNTN_CD'</span>].<span class="bu">apply</span>(</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: <span class="dv">1</span> <span class="cf">if</span> x <span class="op">!=</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span>)</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>df_zip_fail[<span class="st">'STATUS'</span>] <span class="op">=</span> <span class="st">'Other'</span></span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>df_zip_fail.loc[df_zip_fail[<span class="st">'YEAR_x'</span>] <span class="op">-</span> <span class="dv">1</span> <span class="op">==</span></span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>                df_zip_fail[<span class="st">'YEAR_y'</span>], <span class="st">'STATUS'</span>] <span class="op">=</span> <span class="st">'BEFORE_CLOSURE'</span></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>df_zip_fail.loc[df_zip_fail[<span class="st">'YEAR_x'</span>] <span class="op">==</span></span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>                df_zip_fail[<span class="st">'YEAR_y'</span>], <span class="st">'STATUS'</span>] <span class="op">=</span> <span class="st">'CLOSED'</span></span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>df_zip_fail <span class="op">=</span> df_zip_fail[[<span class="st">"ZIP_CD"</span>, <span class="st">"STATUS"</span>, <span class="st">"ACTIVE"</span>]]</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>df_zip_fail <span class="op">=</span> df_zip_fail.pivot(</span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="st">"ZIP_CD"</span>, columns<span class="op">=</span><span class="st">"STATUS"</span>, values<span class="op">=</span><span class="st">"ACTIVE"</span>).reset_index()</span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>df_zip_fail[<span class="st">"INCREASE"</span>] <span class="op">=</span> df_zip_fail[<span class="st">"BEFORE_CLOSURE"</span>] <span class="op">-</span> df_zip_fail[<span class="st">"CLOSED"</span>]</span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Zip codes where the number of hospital do not decrease in the year of clousure</span></span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>df_zip_fail <span class="op">=</span> df_zip_fail[df_zip_fail[<span class="st">"INCREASE"</span>] <span class="op">&lt;=</span> <span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="part-a-2" class="level4">
+<h4 class="anchored" data-anchor-id="part-a-2">Part (a)</h4>
+<div id="8873863d" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df_closed_by2019 <span class="op">=</span> df_closed_by2019.merge(df_zip_fail[[<span class="st">"ZIP_CD"</span>,<span class="st">"INCREASE"</span>]], on <span class="op">=</span> <span class="st">"ZIP_CD"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>df_closed_by2019[<span class="st">"INCREASE"</span>].unique()</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>df_closed_by2019[<span class="st">"POT_MERGE"</span>] <span class="op">=</span> df_closed_by2019[<span class="st">"INCREASE"</span>].<span class="bu">apply</span>(</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: <span class="dv">1</span> <span class="cf">if</span> x <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>pot_merge <span class="op">=</span> df_closed_by2019[df_closed_by2019[<span class="st">"POT_MERGE"</span>]<span class="op">==</span><span class="dv">1</span>][<span class="st">"POT_MERGE"</span>].value_counts().iloc[<span class="dv">0</span>]</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of hospitals that fit in the definition of potentially being a merger/acquisition: </span><span class="sc">{</span>pot_merge<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>df_closed_by2019 <span class="op">=</span> df_closed_by2019[df_closed_by2019[<span class="st">"POT_MERGE"</span>] <span class="op">!=</span> <span class="dv">1</span>]</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>nhospital_corrected <span class="op">=</span> df_closed_by2019.shape[<span class="dv">0</span>]</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of hospitals left after correction for potential merge: </span><span class="sc">{</span>nhospital_corrected<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of hospitals that fit in the definition of potentially being a merger/acquisition: 3
+Number of hospitals left after correction for potential merge: 117</code></pre>
+</div>
+</div>
+</section>
+<section id="part-b-2" class="level4">
+<h4 class="anchored" data-anchor-id="part-b-2">Part (b)</h4>
+<div id="5a2df28d" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sorting by name</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>df_closed_by2019.sort_values(by<span class="op">=</span>[<span class="st">'FAC_NAME'</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>df_closed_by2019.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">PRVDR_NUM</th>
+<th data-quarto-table-cell-role="th">FAC_NAME</th>
+<th data-quarto-table-cell-role="th">ZIP_CD</th>
+<th data-quarto-table-cell-role="th">YEAR</th>
+<th data-quarto-table-cell-role="th">INCREASE</th>
+<th data-quarto-table-cell-role="th">POT_MERGE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>30001</td>
+<td>ABRAZO MARYVALE CAMPUS</td>
+<td>85031.0</td>
+<td>2017.0</td>
+<td>NaN</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>50196</td>
+<td>ADVENTIST MEDICAL CENTER - CENTRAL VALLEY</td>
+<td>93230.0</td>
+<td>2017.0</td>
+<td>NaN</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>360151</td>
+<td>AFFINITY MEDICAL CENTER</td>
+<td>44646.0</td>
+<td>2018.0</td>
+<td>NaN</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>330189</td>
+<td>ALBANY MEDICAL CENTER / SOUTH CLINICAL CAMPUS</td>
+<td>12208.0</td>
+<td>2017.0</td>
+<td>NaN</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>450488</td>
+<td>ALLEGIANCE SPECIALTY HOSPITAL OF KILGORE</td>
+<td>75662.0</td>
+<td>2017.0</td>
+<td>NaN</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>250159</td>
+<td>ALLIANCE LAIRD HOSPITAL</td>
+<td>39365.0</td>
+<td>2019.0</td>
+<td>NaN</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>370032</td>
+<td>ALLIANCEHEALTH DEACONESS</td>
+<td>73112.0</td>
+<td>2019.0</td>
+<td>NaN</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>60036</td>
+<td>ARKANSAS VALLEY REGIONAL MEDICAL CENTER</td>
+<td>81050.0</td>
+<td>2017.0</td>
+<td>NaN</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>290006</td>
+<td>BANNER CHURCHILL COMMUNITY HOSPITAL</td>
+<td>89406.0</td>
+<td>2017.0</td>
+<td>NaN</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>30033</td>
+<td>BANNER PAYSON MEDICAL CENTER</td>
+<td>85541.0</td>
+<td>2018.0</td>
+<td>NaN</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="download-census-zip-code-shapefile-10-pt" class="level2">
+<h2 class="anchored" data-anchor-id="download-census-zip-code-shapefile-10-pt">Download Census zip code shapefile (10 pt)</h2>
+<section id="question-1-2" class="level3">
+<h3 class="anchored" data-anchor-id="question-1-2">Question 1</h3>
+<section id="part-a-3" class="level4">
+<h4 class="anchored" data-anchor-id="part-a-3">Part (a)</h4>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 77%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>File Extension</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>.dbf</strong></td>
+<td>Stores attribute data in a table format, similar to a database or spreadsheet.</td>
+</tr>
+<tr class="even">
+<td><strong>.prj</strong></td>
+<td>Contains projection and coordinate system information for accurate representation of the Earth’s sphere into a plane.</td>
+</tr>
+<tr class="odd">
+<td><strong>.shp</strong></td>
+<td>Holds spatial data like points, lines, and polygons.</td>
+</tr>
+<tr class="even">
+<td><strong>.shx</strong></td>
+<td>An index file linking the .shp spatial data to the attribute data in .dbf</td>
+</tr>
+<tr class="odd">
+<td><strong>.xml</strong></td>
+<td>Stores metadata</td>
+</tr>
+</tbody>
+</table>
+<p>All together, these files create the “shapefile,” storing both attribute and spatial data.</p>
+</section>
+<section id="part-b-3" class="level4">
+<h4 class="anchored" data-anchor-id="part-b-3">Part (b)</h4>
+<div id="d437df10" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sol</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># data_path = r"C:\Users\solch\OneDrive\Documentos\2024 - autumn quarter\python II\problem-set-4-sol-cristian\data"</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Cris</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>data_path <span class="op">=</span> <span class="vs">r"C:\Users\Cristian\Documents\GitHub\ppha30538_fall2024\problem-set-4-sol-cristian\data"</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># List of file paths</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>file_paths <span class="op">=</span> [<span class="st">"gz_2010_us_860_00_500k.dbf "</span>, <span class="st">"gz_2010_us_860_00_500k.prj "</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>              <span class="st">"gz_2010_us_860_00_500k.shp"</span>, <span class="st">"gz_2010_us_860_00_500k.shx"</span>,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>              <span class="st">"gz_2010_us_860_00_500k.xml"</span>]</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to get file sizes</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_file_sizes(paths):</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> paths:</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        path <span class="op">=</span> path <span class="op">=</span> os.path.join(</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>            data_path, <span class="bu">file</span>)</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>        size <span class="op">=</span> os.path.getsize(path)  <span class="co"># Size in bytes</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>os<span class="sc">.</span>path<span class="sc">.</span>basename(<span class="bu">file</span>)<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>size <span class="op">/</span> <span class="dv">1024</span><span class="sc">:.2f}</span><span class="ss"> KB"</span>)  <span class="co"># Size in KB</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Got help from AI for conversion</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Measure and print file sizes</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>get_file_sizes(file_paths)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>gz_2010_us_860_00_500k.dbf : 6274.88 KB
+gz_2010_us_860_00_500k.prj : 0.16 KB
+gz_2010_us_860_00_500k.shp: 817914.63 KB
+gz_2010_us_860_00_500k.shx: 258.85 KB
+gz_2010_us_860_00_500k.xml: 15.27 KB</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="question-2-1" class="level3">
+<h3 class="anchored" data-anchor-id="question-2-1">Question 2</h3>
+<div id="0e58b676" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reading in shapefile</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> path <span class="op">=</span> os.path.join(data_path, <span class="st">"gz_2010_us_860_00_500k.shp"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>shp_file <span class="op">=</span> gpd.read_file(path)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Getting column names to identify where I can find the ZIP</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>shp_file.columns</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Subsetting Texas</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>texas_shp <span class="op">=</span> shp_file[shp_file[<span class="st">"ZCTA5"</span>].<span class="bu">str</span>.startswith(</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"75"</span>, <span class="st">"76"</span>, <span class="st">"77"</span>, <span class="st">"78"</span>, <span class="st">"79"</span>))]</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating new df to work on</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>df_2016_tx <span class="op">=</span> df_2016</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Turning zip column into a string for better data handling</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>df_2016_tx[<span class="st">"ZIP_CD"</span>] <span class="op">=</span> df_2016_tx[<span class="st">"ZIP_CD"</span>] .astype(<span class="bu">str</span>)</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Subsetting to only TX</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>df_2016_tx <span class="op">=</span> df_2016_tx[df_2016_tx[<span class="st">"ZIP_CD"</span>].<span class="bu">str</span>.startswith(</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"75"</span>, <span class="st">"76"</span>, <span class="st">"77"</span>, <span class="st">"78"</span>, <span class="st">"79"</span>)) <span class="op">&amp;</span> (df_2016_tx[<span class="st">"ZIP_CD"</span>].<span class="bu">str</span>.<span class="bu">len</span>() <span class="op">==</span> <span class="dv">7</span>)]</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Cleaning strings</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>df_2016_tx[<span class="st">"ZIP_CD"</span>] <span class="op">=</span> df_2016_tx[<span class="st">"ZIP_CD"</span>].<span class="bu">str</span>.replace(</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'.0'</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Counting hospitals by ZIP</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>df_2016_tx <span class="op">=</span> df_2016_tx.groupby(<span class="st">"ZIP_CD"</span>).size().reset_index()</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Renaming columns to merge properly</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>df_2016_tx.columns <span class="op">=</span> [<span class="st">"ZCTA5"</span>, <span class="st">"COUNT"</span>]</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>gdf_2016_tx <span class="op">=</span> texas_shp.merge(df_2016_tx, on<span class="op">=</span><span class="st">"ZCTA5"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Making NAs = 0</span></span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>gdf_2016_tx[<span class="st">"COUNT"</span>] <span class="op">=</span> gdf_2016_tx[<span class="st">"COUNT"</span>].fillna(<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="703bcce7" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  Plotting  #</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>gdf_2016_tx.plot(column<span class="op">=</span><span class="st">"COUNT"</span>, cmap<span class="op">=</span><span class="st">"Greens"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                    linewidth<span class="op">=</span><span class="fl">0.8</span>, ax<span class="op">=</span>ax, edgecolor<span class="op">=</span><span class="st">"0.6"</span>, legend<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Number of Hospitals per Zip Code in Texas (2016)"</span>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove axis and ticks</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>ax.set_xticks([])</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>ax.set_yticks([])</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="pset4_template_cris_sol_files/figure-html/cell-16-output-1.png" width="707" height="625" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="calculate-zip-codes-distance-to-the-nearest-hospital-20-pts" class="level2">
+<h2 class="anchored" data-anchor-id="calculate-zip-codes-distance-to-the-nearest-hospital-20-pts">Calculate zip code’s distance to the nearest hospital (20 pts) (*)</h2>
+<section id="question-1-3" class="level3">
+<h3 class="anchored" data-anchor-id="question-1-3">Question 1</h3>
+<div id="0c023f51" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>zips_all_centroids <span class="op">=</span> shp_file.copy()</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>zips_all_centroids[<span class="st">'centroid'</span>] <span class="op">=</span> shp_file.geometry.centroid</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Dimensions of the new GeoDataFrame:</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>zips_all_centroids.shape</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>zips_all_centroids.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>Index(['GEO_ID', 'ZCTA5', 'NAME', 'LSAD', 'CENSUSAREA', 'geometry',
+       'centroid'],
+      dtype='object')</code></pre>
+</div>
+</div>
+<p>Meaning of each column: + GEO_ID: Identifier for geographic area. + ZCTA5: ZIP Code Tabulation Area. + NAME: Description/Labe of an area. + LSAD: Legal/Statistical Area Description; typically used to describe the type of area. + CENSUSAREA: Area of the ZIP code region. + geometry: represent a polygon geometry of each ZIP code area. + centroid: centroid of each ZIP code area as a point geometry.</p>
+</section>
+<section id="question-2-2" class="level3">
+<h3 class="anchored" data-anchor-id="question-2-2">Question 2</h3>
+<div id="484c3eb6" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Zip codes in Texas</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>zips_texas_centroids <span class="op">=</span> zips_all_centroids[zips_all_centroids[<span class="st">"ZCTA5"</span>].<span class="bu">str</span>.startswith(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"75"</span>, <span class="st">"76"</span>, <span class="st">"77"</span>, <span class="st">"78"</span>, <span class="st">"79"</span>))]</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># For subsetting all zip codes in Texas or a bordering state, we will use the following prefixes:</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Texas TX: 75, 76, 77, 78, 79 | New Mexico NM: 87, 88 | Oklahoma OK: 73, 74 | Arkansas : 716, 717, 718, 719, 72 | Louisiana: 700, 715 AR and LS are grouped using from 70 to 72.</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>zips_texas_borderstates_centroids  <span class="op">=</span> zips_all_centroids[zips_all_centroids[<span class="st">"ZCTA5"</span>].<span class="bu">str</span>.startswith(</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"75"</span>, <span class="st">"76"</span>, <span class="st">"77"</span>, <span class="st">"78"</span>, <span class="st">"79"</span>,</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>     <span class="st">"87"</span>, <span class="st">"88"</span>,</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>     <span class="st">"73"</span>,<span class="st">"74"</span>,</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>     <span class="st">"70"</span>, <span class="st">"71"</span>, <span class="st">"72"</span>))]</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>nzip_tx <span class="op">=</span> zips_texas_centroids[<span class="st">"ZCTA5"</span>].nunique()</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>nzip_tx_borders <span class="op">=</span> zips_texas_borderstates_centroids[<span class="st">"ZCTA5"</span>].nunique()</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of unique zip codes in zips_texas_centroids: </span><span class="sc">{</span>nzip_tx<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of unique zip codes in nzip_tx_borders: </span><span class="sc">{</span>nzip_tx_borders<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of unique zip codes in zips_texas_centroids: 1935
+Number of unique zip codes in nzip_tx_borders: 4057</code></pre>
+</div>
+</div>
+</section>
+<section id="question-3-2" class="level3">
+<h3 class="anchored" data-anchor-id="question-3-2">Question 3</h3>
+<div id="7d62b4a3" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df_2016_tx_border <span class="op">=</span> df_2016[df_2016[<span class="st">"PGM_TRMNTN_CD"</span>]<span class="op">==</span><span class="dv">0</span>]</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Turning zip column into a string for better data handling</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>df_2016_tx_border[<span class="st">"ZIP_CD"</span>] <span class="op">=</span> df_2016_tx_border[<span class="st">"ZIP_CD"</span>].astype(<span class="bu">str</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>df_2016_tx_border  <span class="op">=</span> df_2016_tx_border[df_2016_tx_border[<span class="st">"ZIP_CD"</span>].<span class="bu">str</span>.startswith(</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"75"</span>, <span class="st">"76"</span>, <span class="st">"77"</span>, <span class="st">"78"</span>, <span class="st">"79"</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">"87"</span>, <span class="st">"88"</span>,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>     <span class="st">"73"</span>,<span class="st">"74"</span>,</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>     <span class="st">"70"</span>, <span class="st">"71"</span>, <span class="st">"72"</span>))]</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>df_2016_tx_border[<span class="st">"ZIP_CD"</span>] <span class="op">=</span> df_2016_tx_border[<span class="st">"ZIP_CD"</span>].<span class="bu">str</span>.replace(</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'.0'</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Hospitals per ZIP</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>df_2016_tx_border <span class="op">=</span> df_2016_tx_border.groupby(<span class="st">"ZIP_CD"</span>).size().reset_index()</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Renaming columns to merge properly</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>df_2016_tx_border.columns <span class="op">=</span> [<span class="st">"ZCTA5"</span>, <span class="st">"COUNT"</span>]</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="co"># ZIPS with at least one hospital</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>df_2016_tx_border <span class="op">=</span> df_2016_tx_border[df_2016_tx_border[<span class="st">"COUNT"</span>]<span class="op">&gt;</span><span class="dv">0</span>]</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Merging</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>zips_withhospital_centroids<span class="op">=</span> zips_texas_borderstates_centroids.merge(df_2016_tx_border, on<span class="op">=</span><span class="st">"ZCTA5"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>zips_withhospital_centroids <span class="op">=</span> zips_withhospital_centroids[zips_withhospital_centroids[<span class="st">"COUNT"</span>]<span class="op">&gt;</span><span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I am merging the previously created GeoDataFrame, zips_texas_borderstates_centroids, which contains all ZIP codes in Texas and bordering states, with the dataset which includes the number of hospitals per ZIP code. Since the later dataset contains the ZIP codes of interest (with at leat 1 hospital in 2016), we are using a right merge to retain these ZIP codes for analysis. The merge is performed on the ZCTA5 variable, and we are preserving all geographical variables: GEO_ID, LSAD, CENSUSAREA, geometry, and centroid. Additionally, we are adding the number of hospitals in each ZIP code area.</p>
+</section>
+<section id="question-4-1" class="level3">
+<h3 class="anchored" data-anchor-id="question-4-1">Question 4</h3>
+<section id="part-a-4" class="level4">
+<h4 class="anchored" data-anchor-id="part-a-4">Part (a)</h4>
+<div id="5c825cc3" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subseting with 10 zip codes</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>zips_texas_with_distance_10 <span class="op">=</span> zips_texas_centroids[:<span class="dv">10</span>][[<span class="st">"GEO_ID"</span>, <span class="st">"ZCTA5"</span>, <span class="st">"geometry"</span>, <span class="st">"centroid"</span>]]</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>zips_texas_with_distance_10</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co"># To estimate the time for this exercise</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>start_time <span class="op">=</span> time.time()</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>zips_texas_with_distance_10 <span class="op">=</span> gpd.sjoin_nearest(</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    zips_texas_with_distance_10,</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    zips_withhospital_centroids,</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    how <span class="op">=</span> <span class="st">"left"</span>,</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    distance_col <span class="op">=</span> <span class="st">"distance"</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>end_time <span class="op">=</span> time.time()</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>time_spent <span class="op">=</span> end_time <span class="op">-</span> start_time</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Time of this excercise: </span><span class="sc">{</span>time_spent<span class="sc">}</span><span class="ss">s"</span>)</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>estimation <span class="op">=</span> zips_texas_centroids.shape[<span class="dv">0</span>]<span class="op">/</span><span class="dv">10</span><span class="op">*</span>time_spent</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Estimated time for the whole GeoDataFrame: </span><span class="sc">{</span>estimation<span class="sc">}</span><span class="ss">s"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time of this excercise: 2.2256484031677246s
+Estimated time for the whole GeoDataFrame: 430.6629660129547s</code></pre>
+</div>
+</div>
+</section>
+<section id="part-b-4" class="level4">
+<h4 class="anchored" data-anchor-id="part-b-4">Part (b)</h4>
+<div id="ff37bf4a" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>zips_texas_with_distance <span class="op">=</span> zips_texas_centroids[[<span class="st">"GEO_ID"</span>, <span class="st">"ZCTA5"</span>, <span class="st">"geometry"</span>, <span class="st">"centroid"</span>]]</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># To estimate the time for this exercise</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>start_time <span class="op">=</span> time.time()</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>zips_texas_with_distance <span class="op">=</span> gpd.sjoin_nearest(</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    zips_texas_with_distance, </span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    zips_withhospital_centroids,</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    how <span class="op">=</span> <span class="st">"inner"</span>,</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    distance_col <span class="op">=</span> <span class="st">"distance"</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>end_time <span class="op">=</span> time.time()</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>time_spent <span class="op">=</span> end_time <span class="op">-</span> start_time</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>time_spent</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"It takes: </span><span class="sc">{</span>time_spent<span class="sc">}</span><span class="ss"> seconds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>It takes: 492.65690994262695 seconds</code></pre>
+</div>
+</div>
+<p>My estimation was lower than the actual value.</p>
+</section>
+<section id="part-c" class="level4">
+<h4 class="anchored" data-anchor-id="part-c">Part (c)</h4>
+<div id="f199f18d" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> path <span class="op">=</span> os.path.join(data_path, <span class="st">"gz_2010_us_860_00_500k.prj"</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(path, <span class="st">"r"</span>) <span class="im">as</span> prj_file:</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    prj_content <span class="op">=</span> prj_file.read() </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Projection content:"</span>, prj_content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Projection content: GEOGCS["GCS_North_American_1983",DATUM["D_North_American_1983",SPHEROID["GRS_1980",6378137,298.257222101]],PRIMEM["Greenwich",0],UNIT["Degree",0.017453292519943295]]</code></pre>
+</div>
+</div>
+<p>The unit shown in the .prj file is “Degree.” One degree is approximately equivalent to 69 miles.</p>
+</section>
+</section>
+<section id="question-5" class="level3">
+<h3 class="anchored" data-anchor-id="question-5">Question 5</h3>
+<div id="a787cdc5" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Average distance to the nearest hospital for each zip code</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>zips_texas_avg_distance <span class="op">=</span> zips_texas_with_distance.groupby(<span class="st">"ZCTA5_left"</span>).aggregate(</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    avg_distance <span class="op">=</span> (<span class="st">"distance"</span>, <span class="st">"mean"</span>),</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    geometry <span class="op">=</span> (<span class="st">"geometry"</span>, <span class="st">"first"</span>),</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    centroid <span class="op">=</span> (<span class="st">"centroid_left"</span>, <span class="st">"first"</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Average distance in miles per zip code</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>zips_texas_avg_distance[<span class="st">"avg_distance"</span>] <span class="op">=</span> zips_texas_avg_distance[<span class="st">"avg_distance"</span>]<span class="op">*</span><span class="dv">69</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="part-a-5" class="level4">
+<h4 class="anchored" data-anchor-id="part-a-5">Part (a)</h4>
+<div id="8e8524cb" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>zips_texas_avg_distance_gdf <span class="op">=</span> gpd.GeoDataFrame(</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    zips_texas_avg_distance,</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    geometry<span class="op">=</span><span class="st">"geometry"</span>,</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    crs<span class="op">=</span><span class="st">"EPSG:4269"</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(zips_texas_avg_distance_gdf.crs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>EPSG:4269</code></pre>
+</div>
+</div>
+<p>The units are in degree. However en the distances were multiplied by 69 to convert them to miles.</p>
+</section>
+<section id="part-b-5" class="level4">
+<h4 class="anchored" data-anchor-id="part-b-5">Part (b)</h4>
+<div id="b02fa334" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Average distance in miles</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>zips_texas_avg_distance_gdf[<span class="st">"avg_distance"</span>].mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>2.754165545455319</code></pre>
+</div>
+</div>
+<p>The average distance is 2.75 miles. In the dataset we can see that there are many zeros, which make the average to be lower. A zero distance indicate that there is a hospital in the zip code. The value then make sense.</p>
+</section>
+<section id="part-c-1" class="level4">
+<h4 class="anchored" data-anchor-id="part-c-1">Part (c)</h4>
+<div id="24608cd4" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">12</span>))</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>zips_texas_avg_distance_gdf.plot(</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    column<span class="op">=</span><span class="st">"avg_distance"</span>,       </span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"OrRd"</span>,                 </span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    legend<span class="op">=</span><span class="va">True</span>,            </span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    legend_kwds<span class="op">=</span>{</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'label'</span>: <span class="st">"Average Distance to Nearest Hospital (miles)"</span>,</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'orientation'</span>: <span class="st">"vertical"</span> </span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>ax.set_xticks([])</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>ax.set_yticks([])</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="pset4_template_cris_sol_files/figure-html/cell-26-output-1.png" width="867" height="914" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>From the graph, we can see that some areas in the borders have the greater distance to hospitals.</p>
+</section>
+</section>
+</section>
+<section id="effects-of-closures-on-access-in-texas-15-pts" class="level2">
+<h2 class="anchored" data-anchor-id="effects-of-closures-on-access-in-texas-15-pts">Effects of closures on access in Texas (15 pts)</h2>
+<section id="question-1-4" class="level3">
+<h3 class="anchored" data-anchor-id="question-1-4">Question 1</h3>
+<div id="e9678822" class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Turning ZIP_CD into a string</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>df_closed_by2019[<span class="st">"ZIP_CD"</span>] <span class="op">=</span> df_closed_by2019[<span class="st">"ZIP_CD"</span>].astype(<span class="bu">str</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Selecting TX zipcodes</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>df_closed_tx <span class="op">=</span> df_closed_by2019[df_closed_by2019[<span class="st">"ZIP_CD"</span>].<span class="bu">str</span>.startswith(</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"75"</span>, <span class="st">"76"</span>, <span class="st">"77"</span>, <span class="st">"78"</span>, <span class="st">"79"</span>)) <span class="op">&amp;</span> (df_closed_by2019[<span class="st">"ZIP_CD"</span>].<span class="bu">str</span>.<span class="bu">len</span>() <span class="op">==</span> <span class="dv">7</span>)]</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Cleaning for aesthetic purposes</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>df_closed_tx[<span class="st">"ZIP_CD"</span>] <span class="op">=</span> df_closed_tx[<span class="st">"ZIP_CD"</span>].<span class="bu">str</span>.replace(<span class="vs">r'\.0$'</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Counting closures by </span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>df_closed_zip_tx <span class="op">=</span> df_closed_tx.groupby(<span class="st">"ZIP_CD"</span>).size().reset_index()</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>df_closed_zip_tx.columns <span class="op">=</span> [<span class="st">"ZIP"</span>, <span class="st">"hospital_closures"</span>]</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_closed_zip_tx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      ZIP  hospital_closures
+0   75042                  1
+1   75051                  1
+2   75087                  1
+3   75231                  1
+4   75601                  1
+5   75662                  1
+6   75835                  1
+7   75862                  1
+8   76502                  1
+9   76520                  1
+10  76531                  1
+11  77035                  1
+12  77054                  1
+13  77429                  1
+14  77479                  1
+15  77598                  1
+16  78017                  1
+17  78061                  1
+18  78336                  1
+19  78734                  1
+20  78834                  1
+21  79553                  1
+22  79735                  1
+23  79761                  1
+24  79902                  1</code></pre>
+</div>
+</div>
+</section>
+<section id="question-2-3" class="level3">
+<h3 class="anchored" data-anchor-id="question-2-3">Question 2</h3>
+<div id="addb5447" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df_closed_zip_tx.columns <span class="op">=</span> [<span class="st">"ZCTA5"</span>, <span class="st">"hospital_closures"</span>]</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>gdf_tx <span class="op">=</span> gdf_2016_tx.merge(df_closed_zip_tx, on<span class="op">=</span><span class="st">"ZCTA5"</span>, how<span class="op">=</span> <span class="st">"left"</span> )</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace NA values with 0</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>gdf_tx[<span class="st">"hospital_closures"</span>] <span class="op">=</span> gdf_tx[<span class="st">"hospital_closures"</span>].fillna(<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="5becac68" class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting red color for zips with closures</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Chat GPT helped with this. Query: Since my variable is binary, can my scale be binary as well?</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.colors <span class="im">import</span> ListedColormap</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.lines <span class="im">import</span> Line2D</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>binary_cmap <span class="op">=</span> ListedColormap([<span class="st">"lightgray"</span>, <span class="st">"red"</span>])</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Making chart</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>gdf_tx.plot(column<span class="op">=</span> <span class="st">"hospital_closures"</span>, cmap<span class="op">=</span> binary_cmap,</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>           linewidth<span class="op">=</span><span class="fl">0.6</span>, ax<span class="op">=</span>ax, edgecolor<span class="op">=</span><span class="st">'0.6'</span>)</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="co"># I also asked AI to help me make this plot prettier. The following lines were coded # with some of its suggestions</span></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Title</span></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Texas ZIP Codes with Hospital Closures (2017-2019)"</span>, fontsize<span class="op">=</span><span class="dv">12</span>, weight<span class="op">=</span><span class="st">'bold'</span>, pad<span class="op">=</span><span class="dv">20</span>) </span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Legend</span></span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>closure_marker <span class="op">=</span> [Line2D([<span class="dv">0</span>], [<span class="dv">0</span>], marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span><span class="st">'w'</span>, label<span class="op">=</span><span class="st">'Closures'</span>,</span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>                         markersize<span class="op">=</span><span class="dv">10</span>, markerfacecolor<span class="op">=</span><span class="st">'red'</span>)]</span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>closure_marker, loc<span class="op">=</span><span class="st">'lower right'</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove axis and ticks</span></span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>ax.set_xticks([])</span>
+<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>ax.set_yticks([])</span>
+<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="pset4_template_cris_sol_files/figure-html/cell-29-output-1.png" width="643" height="649" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-3" class="level3">
+<h3 class="anchored" data-anchor-id="question-3-3">Question 3</h3>
+<div id="8f211a1b" class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter geodf to only include those with hospital closures</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>gdf_tx_closures <span class="op">=</span> gdf_tx[gdf_tx[<span class="st">"hospital_closures"</span>] <span class="op">&gt;</span> <span class="dv">0</span>]</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a 10 mi buffer (Projection is in meters, mile is 1609.34m, so 10 miles =  1609.34 *10 = 16093.4)</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>gdf_tx_closures[<span class="st">"buffer"</span>] <span class="op">=</span> gdf_tx_closures.geometry.<span class="bu">buffer</span>(<span class="fl">16093.4</span>)</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Renaming column to idenitfy ZCTA of indirectly affected better after merging</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>gdf_tx_closures <span class="op">=</span> gdf_tx_closures.rename(columns<span class="op">=</span>{<span class="st">"ZCTA5"</span>: <span class="st">"ZCTA5_buffer"</span>})</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Spatial join to merge geodfs together</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="co"># AI inadvertedly helped on this while I did a Google search.</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Google search: spatial join on python, gemini showed me some code</span></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>gdf_tx_indirect_closures <span class="op">=</span> gpd.sjoin(</span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>    gdf_tx, gdf_tx_closures, how<span class="op">=</span><span class="st">"inner"</span>, predicate<span class="op">=</span><span class="st">"intersects"</span>)</span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Subsetting buffer Zips so they don't get counted twice</span></span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>buffer_zips <span class="op">=</span> gdf_tx_indirect_closures[<span class="st">"ZCTA5_buffer"</span>].unique()</span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Get indirectly affected zips</span></span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>indirectly_affected_zips <span class="op">=</span> gdf_tx_indirect_closures[<span class="st">"ZCTA5"</span>].unique()</span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a>indirectly_affected_zips <span class="op">=</span> indirectly_affected_zips[<span class="op">~</span>np.isin(</span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a>    indirectly_affected_zips, buffer_zips)]</span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Counting indirectly affected ZIP codes</span></span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a>indirectly_affected_zip_count <span class="op">=</span> <span class="bu">len</span>(indirectly_affected_zips)</span>
+<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of indirectly affected ZIP codes:"</span>, indirectly_affected_zip_count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of indirectly affected ZIP codes: 136</code></pre>
+</div>
+</div>
+</section>
+<section id="question-4-2" class="level3">
+<h3 class="anchored" data-anchor-id="question-4-2">Question 4</h3>
+<div id="02cd268d" class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a dummy that reflects hospital closures</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>gdf_tx[<span class="st">"affected"</span>] <span class="op">=</span> np.where(gdf_tx[<span class="st">"hospital_closures"</span>] <span class="op">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-assigning 0 as 2 when ZCTA is indirectly affected</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>gdf_tx[<span class="st">"affected"</span>] <span class="op">=</span> np.where(</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>    (gdf_tx[<span class="st">"ZCTA5"</span>].isin(indirectly_affected_zips)), <span class="fl">0.5</span>, gdf_tx[<span class="st">"affected"</span>]</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the distribution of the affected variable to make sure this worked properly</span></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>closure_status_distribution <span class="op">=</span> gdf_tx[<span class="st">"affected"</span>].value_counts()</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(closure_status_distribution)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>affected
+0.0    1774
+0.5     136
+1.0      25
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="436e45ef" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Choosing colors</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>closure_cmap <span class="op">=</span> ListedColormap([<span class="st">"lightgreen"</span>, <span class="st">"khaki"</span>, <span class="st">"lightcoral"</span>])</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>gdf_tx.plot(column<span class="op">=</span> <span class="st">"affected"</span>, cmap<span class="op">=</span> closure_cmap,</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>           linewidth<span class="op">=</span><span class="fl">0.6</span>, ax<span class="op">=</span>ax, edgecolor<span class="op">=</span><span class="st">'0.6'</span>)</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="co"># I also asked AI to help me make this plot prettier. The following lines were coded # with some of its suggestions</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Texas ZIP Codes affected by Hospital Closures (2017-2019)"</span>, fontsize<span class="op">=</span><span class="dv">12</span>, weight<span class="op">=</span><span class="st">'bold'</span>, pad<span class="op">=</span><span class="dv">20</span>) </span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>handles <span class="op">=</span> [</span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>    plt.Line2D([<span class="dv">0</span>], [<span class="dv">0</span>], marker<span class="op">=</span><span class="st">"o"</span>, color<span class="op">=</span><span class="st">"w"</span>, markerfacecolor<span class="op">=</span> <span class="st">"lightgreen"</span>, markersize<span class="op">=</span><span class="dv">10</span>, label<span class="op">=</span> <span class="st">"No Closure"</span>),</span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>    plt.Line2D([<span class="dv">0</span>], [<span class="dv">0</span>], marker<span class="op">=</span><span class="st">"o"</span>, color<span class="op">=</span><span class="st">"w"</span>, markerfacecolor<span class="op">=</span> <span class="st">"khaki"</span>, markersize<span class="op">=</span><span class="dv">10</span>, label<span class="op">=</span> <span class="st">"Indirectly Affected"</span>),</span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>    plt.Line2D([<span class="dv">0</span>], [<span class="dv">0</span>], marker<span class="op">=</span><span class="st">"o"</span>, color<span class="op">=</span><span class="st">"w"</span>, markerfacecolor<span class="op">=</span> <span class="st">"lightcoral"</span>, markersize<span class="op">=</span><span class="dv">10</span>, label<span class="op">=</span> <span class="st">"Directly Affected"</span>)</span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>handles, title<span class="op">=</span><span class="st">"Closure Status"</span>)</span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>ax.set_xticks([])</span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>ax.set_yticks([])</span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="pset4_template_cris_sol_files/figure-html/cell-32-output-1.png" width="643" height="649" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="reflecting-on-the-exercise-10-pts" class="level2">
+<h2 class="anchored" data-anchor-id="reflecting-on-the-exercise-10-pts">Reflecting on the exercise (10 pts)</h2>
+<section id="part-a-6" class="level3">
+<h3 class="anchored" data-anchor-id="part-a-6">Part (a)</h3>
+<p>One potential problem with the “first-pass” approach is that it does not consider hospitals that are opening. For instance, the net number of hospitals in a ZIP code will remain unchanged if one closes and a brand new one opens, leading to an inaccurate assessment of the healthcare landscape. Additionally, ZIP codes can change, and this might flag an area for having a decreased number of hospitals when a facility has simply relocated to a different ZIP code. Similarly, if a hospital moves to a new campus serving the same area but is now located in a neighboring ZIP code, this could lead to an erroneous count.</p>
+<p>To address these issues, a more effective administrative approach would be to change the way mergers and acquisitions are recorded. For the purpose of accurately determining the number of operating hospitals, it is not necessary to consider whether facilities are under new administration. Instead, these cases should be recorded as “active” with the same CMS code, regardless of name changes. Implementing a tracking system for facility transitions would help ensure that data analysts can maintain accurate records of operational hospitals. While this administrative choice remains unchanged, we must acknowledge that data analysts are often limited by existing practices and rely heavily on approaches such as the first-pass method.</p>
+</section>
+<section id="part-b-6" class="level3">
+<h3 class="anchored" data-anchor-id="part-b-6">Part (b)</h3>
+<p>The approach used to identify ZIP codes affected by closures considers only a single dimension: a 10-mile distance. It does not account for factors such as road networks or transportation infrastructure, population density in each area, health needs, or the presence of other healthcare facilities.</p>
+<p>An improvement to this approach would be to consider additional variables. The number of people living in the area and the availability of other healthcare facilities are especially important. For instance, if a hospital closes in a densely populated area but there are many other healthcare services available, that area may be less affected compared to other ZIP codes with fewer healthcare options. In addition, we can include in the map the presence of roads which is very important for access to healh facilities.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
